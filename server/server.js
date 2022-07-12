@@ -44,6 +44,11 @@ io.on("connection", (socket) => {
         socket.broadcast.emit("users", getUsers());
     });
     
+    socket.on("private_message", ({message, to}) => {
+        socket.to(to).emit("private_message", {message, from: socket.userName});
+    });
+
+
     socket.on("login", (userName) => {
         console.log(userName, "signed in");
     });

@@ -33,6 +33,10 @@ export const useSocketOnEvent = (event, initState) => {
     return data;
 }
 
+export const socketSendPrivateMessage = (data) => {
+    socket.emit('private_message', data);
+}
+
 /* export const socketOnConnectError = (setErrorFunc) => {
     socket.on("connect_error", (error) => {
         setErrorFunc(error.message);
