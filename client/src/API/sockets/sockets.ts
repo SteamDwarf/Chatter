@@ -1,5 +1,12 @@
-import { useState } from 'react';
+import { ErrorInfo, useState } from 'react';
 import io from 'socket.io-client';
+import { MessageTo } from '../../ts-features/interfaces';
+
+export enum SocketEvents {
+    CONNECT_ERROR = 'connect_error',
+    PRIVATE_MESSAGE = 'private_message',
+    USERS = 'users'
+}
 
 const socketServerURL = 'http://localhost:5000';
 let socket = io(socketServerURL, {autoConnect: false});
@@ -8,12 +15,12 @@ socket.onAny((event, ...args) => {
     console.log(event, args);
 });
 
-export const connectToServer = (userName) => {
+export const connectToServer = (userName: string) => {
     socket.auth = {userName};
     socket.connect();
 }
 
-export const useSocketOnError = (event) => {
+export const useSocketOnError = (event: SocketEvents) => {
     const [error, setError] = useState('');
 
     socket.on(event, (error) => {
@@ -23,7 +30,7 @@ export const useSocketOnError = (event) => {
     return error;
 }
 
-export const useSocketOnEvent = (event, initState) => {
+export const useSocketOnEvent = <T>(event: SocketEvents, initState: T) => {
     const [data, setData] = useState(initState);
 
     socket.on(event, (recievedData) => {
@@ -33,8 +40,8 @@ export const useSocketOnEvent = (event, initState) => {
     return data;
 }
 
-export const socketSendPrivateMessage = (data) => {
-    socket.emit('private_message', data);
+export const socketSendPrivateMessage = (data: MessageTo) => {
+    socket.emit(SocketEvents.PRIVATE_MESSAGE, data);
 }
 
 /* export const socketOnConnectError = (setErrorFunc) => {
@@ -52,7 +59,7 @@ export const useSocketOn = (event, callback) => {
 };
  */
 
-export const socketEmit = (action, data) => {
+/* export const socketEmit = (action, data) => {
     socket.emit(action, data);
 }
 
@@ -73,4 +80,4 @@ export const socketRecieveMessage = (setMessagesFunc) => {
     socket.on("recieve_message", (message) => {
         setMessagesFunc((recievedMessages) => [...recievedMessages, message]);
     })
-}
+} */

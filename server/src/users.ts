@@ -1,15 +1,20 @@
-let users = [];
+interface user {
+    id: string;
+    userName: string
+}
+
+let users: user[] = [];
 
 //TODO настроить проверку уникальность имени
-exports.checkUniqUsername = (userName) => {
+/* exports.checkUniqUsername = (userName) => {
     if(users.find((joinedUser) => joinedUser.userName === userName)) {
         return false
     }
 
     return true;
-}
+} */
 
-exports.addUser = (user) => {
+export const addUser = (user: user) => {
     if(!users.find((joinedUser) => joinedUser.userName === user.userName)) {
         users.push(user);
         console.log(users);
@@ -17,10 +22,10 @@ exports.addUser = (user) => {
     
 }
 
-exports.deleteUser = (userId) => {
+export const deleteUser = (userId: string) => {
     users = users.filter((joinedUser) => joinedUser.id !== userId);
 
     console.log(users);
 }
 
-exports.getUsers = () => users;
+export const getUsers = () => users;

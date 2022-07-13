@@ -1,8 +1,8 @@
-const express = require("express");
-const http = require("http");
-const cors = require("cors");
-const { Server } = require("socket.io");
-const { addUser, deleteUser, getUsers, checkUniqUsername } = require("./users");
+import * as express from "express";
+import * as http from "http";
+import * as cors from "cors";
+import { Server } from "socket.io";
+import { addUser, deleteUser, getUsers } from "./users";
 
 const app = express();
 const server = http.createServer(app);
@@ -14,6 +14,12 @@ const io = new Server(server, {
 });
 
 const PORT = 5000;
+
+export enum SocketEvents {
+    CONNECT_ERROR = 'connect_error',
+    PRIVATE_MESSAGE = 'private_message',
+    USERS = 'users'
+}
 
 app.use(cors());
 server.listen(PORT, () => {
@@ -27,16 +33,16 @@ io.use((socket, next) => {
         return next(new Error("Введите имя пользователя."));
     }
 
-    socket.userName = userName;
+    socket.handshake.auth.userName = userName;
     next();
 });
 
 io.on("connection", (socket) => {
     console.log("Connected to server: ", socket.id);
 
-    addUser({id: socket.id, userName: socket.userName});
+    addUser({id: socket.id, userName: socket.handshake.auth.userName});
     //socket.emit("users", getUsers());
-    io.emit("users", getUsers());
+    io.emit(SocketEvents.USERS, getUsers());
 
     socket.on("disconnect", () => {
         console.log("Disconnected from server: ", socket.id);
@@ -44,12 +50,12 @@ io.on("connection", (socket) => {
         socket.broadcast.emit("users", getUsers());
     });
     
-    socket.on("private_message", ({message, to}) => {
-        socket.to(to).emit("private_message", {message, from: socket.userName});
+    socket.on(SocketEvents.PRIVATE_MESSAGE, ({content, to}) => {
+        socket.to(to).emit(SocketEvents.PRIVATE_MESSAGE, {content, from: socket.handshake.auth.userName});
     });
 
 
-    socket.on("login", (userName) => {
+/*     socket.on("login", (userName) => {
         console.log(userName, "signed in");
     });
 
@@ -61,12 +67,12 @@ io.on("connection", (socket) => {
         } catch (error) {
             console.error(error);
         }
-    });
+    }); */
 
     
 
-    socket.on("send_message", (messageData) => {
+    /* socket.on("send_message", (messageData) => {
         socket.to(messageData.room).emit("recieve_message", messageData.message);
-    });
+    }); */
 
 });
