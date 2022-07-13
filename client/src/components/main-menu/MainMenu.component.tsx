@@ -1,5 +1,3 @@
-import {Container} from '@mui/material';
-
 import { ChangeEvent, KeyboardEvent, useContext } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -8,6 +6,11 @@ import { IUser, IUserContext, UserContext } from "../../context/userContext.cont
 import { nanoid } from 'nanoid'
 import UserItem from "../user-item/UserItem.component";
 import { MessageFrom } from "../../ts-features/interfaces";
+import SidebarLayout from '../../UI/layouts/sidebar-layout/SidebarLayout.ui';
+import ContactsHeader from '../contacts-header/ContactsHeader.component';
+import Contacts from '../contacts/Contacts.component';
+import Container from "../../UI/container/Container";
+
 
 const MainMenu = () => {
     const [messageContent, setMessageContent] = useState('');
@@ -39,18 +42,13 @@ const MainMenu = () => {
     }, [messageData]);
 
     return (
-        <Container>
-            <div>
-                <h2>{`Имя пользователя: ${user}`}</h2>
-            </div>
+        <Container heightType="fullHeight">
+            <Contacts users={onlineUsers}/>
             <div>
                 <h2>Сообщения:</h2>
                 {messages.map((recievedMessage) => <h4 key={nanoid()}>{`${recievedMessage.from}: ${recievedMessage.content}`}</h4>)}
             </div>
-            <div>
-                <h2>Пользователи:</h2>
-                {onlineUsers.map((onlineUser) => onlineUser.userName !== user ? <UserItem key={onlineUser.id} id={onlineUser.id} userName={onlineUser.userName}/> : null)}
-            </div>
+            
             {
                 selectedUser.id
                 ? (<div>

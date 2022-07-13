@@ -1,0 +1,71 @@
+.contained.main {
+    border: 1px solid #3B6EF7;
+    background-color: #3B6EF7;
+    color: white;
+}
+
+.small {
+    padding: 1%;
+    min-width: 80px;
+}
+
+.medium {
+    padding: 2%;
+    min-width: 100px;
+}
+
+.large {
+    padding: 3%;
+    min-width: 130px;
+}
+
+/*
+===========================================
+========== Rounded ========================
+===========================================
+*/
+
+.low-smooth.small {
+    border-radius: 4px;
+}
+.low-smooth.medium {
+    border-radius: 8px;
+}
+.low-smooth.large {
+    border-radius: 16px;
+}
+
+.medium-smooth.small {
+    border-radius: 8px
+}
+.medium-smooth.medium {
+    border-radius: 16px
+}
+.medium-smooth.large {
+    border-radius: 24px
+}
+
+.strong-smooth.small {
+    border-radius: 16px
+}
+.strong-smooth.medium {
+    border-radius: 32px
+}
+.strong-smooth.large {
+    border-radius: 64px
+}
+
+/*
+===========================================
+========== Width ========================
+===========================================
+*/
+
+.half {
+    width: 50%;
+}
+
+.full {
+    width: 100%;
+}
+
