@@ -4,17 +4,17 @@ import { IUser, IUserContext, UserContext } from '../../context/userContext.cont
 import Container from '../../UI/container/Container';
 import classes from './UserItem.module.css';
 
-const UserItem: FC<IUser> = ({userName, id}) => {
+const UserItem = ({user}: {user: IUser}) => {
     const {setSelectedUser} = useContext<IUserContext>(UserContext);
 
     const onClickHandler = () => {
-        setSelectedUser({id, userName});
+        setSelectedUser({id: user.id, userName: user.userName, messages: user.messages});
     }
 
     return (
     <div className={classes.userItem} onClick={onClickHandler}>
-        <h3 className={classes.userIcon}>{userName[0]}</h3>
-        <h4>{userName}</h4>
+        <h3 className={classes.userIcon}>{user.userName[0]}</h3>
+        <h4>{user.userName}</h4>
     </div>
     )
 }

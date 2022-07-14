@@ -22,7 +22,7 @@ const Contacts = memo(({contacts}: {contacts: IUser[]}) => {
         <Container className={classes.contactsBlock} typeDirection='column'>
             <ContactsHeader userFilter={filter} setUserFilter={setFilter}/>
             {filteredContacts.map(contact => contact.userName !== user 
-                ? <UserItem key={contact.id} id={contact.id} userName={contact.userName}/>
+                ? <UserItem key={contact.id} user={contact}/>
                 : null
             )}
         </Container>

@@ -4,7 +4,7 @@ import classes from './Input.module.css';
 
 interface InputProps {
     className?: string;
-    type: string;
+    type?: 'text' | 'password' | 'email';
     placeholder?: string;
     value: string;
     valueSetter: (string: string) => void;
@@ -18,7 +18,7 @@ interface InputProps {
 
 const Input:FC<InputProps> = ({
     className,
-    type, 
+    type = 'text', 
     placeholder, 
     value,
     valueSetter, 
@@ -33,6 +33,7 @@ const Input:FC<InputProps> = ({
     const classNames = `${classes.input} ${className} ${classes[color]} ${classes[size]} ${classes[width]} ${classes[rounded]}`
 
     const clearInput = () => {
+        console.log('clearin');
         valueSetter('');
     }
 

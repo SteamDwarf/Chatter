@@ -40,18 +40,19 @@ io.use((socket, next) => {
 io.on("connection", (socket) => {
     console.log("Connected to server: ", socket.id);
 
-    addUser({id: socket.id, userName: socket.handshake.auth.userName});
+    addUser({id: socket.id, userName: socket.handshake.auth.userName, messages: []});
     //socket.emit("users", getUsers());
     io.emit(SocketEvents.USERS, getUsers());
 
     socket.on("disconnect", () => {
         console.log("Disconnected from server: ", socket.id);
         deleteUser(socket.id);
-        socket.broadcast.emit("users", getUsers());
+        socket.broadcast.emit(SocketEvents.USERS, getUsers());
     });
     
-    socket.on(SocketEvents.PRIVATE_MESSAGE, ({content, to}) => {
-        socket.to(to).emit(SocketEvents.PRIVATE_MESSAGE, {content, from: socket.handshake.auth.userName});
+    socket.on(SocketEvents.PRIVATE_MESSAGE, ({content, to, date, from}) => {
+        console.log({content, to, date, from});
+        socket.to(to).emit(SocketEvents.PRIVATE_MESSAGE, {content, from: socket.handshake.auth.userName, date, to: to});
     });
 
 

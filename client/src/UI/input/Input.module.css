@@ -69,13 +69,13 @@
 }
 
 .inputClearBtn {
-    display: none;
     position: absolute;
     cursor: pointer;
+    opacity: 0;
 }
 
 .input:focus + .inputClearBtn {
-    display: inline;
+    opacity: 1;
 }
 
 .small + .inputClearBtn {

@@ -10,59 +10,21 @@ import SidebarLayout from '../../UI/layouts/sidebar-layout/SidebarLayout.ui';
 import ContactsHeader from '../contacts-header/ContactsHeader.component';
 import Contacts from '../contacts/Contacts.component';
 import Container from "../../UI/container/Container";
+import Chat from "../chat/Chat.component";
 
 
 const MainMenu = () => {
-    const [messageContent, setMessageContent] = useState('');
-    const {user, selectedUser} = useContext<IUserContext>(UserContext);
-    const [messages, setMessages] = useState<MessageFrom[]>([]);
+    const {selectedUser, setContacts} = useContext<IUserContext>(UserContext);
     const onlineUsers = useSocketOnEvent<IUser[]>(SocketEvents.USERS, []);
-    const messageData = useSocketOnEvent<MessageFrom>(SocketEvents.PRIVATE_MESSAGE, {content: '', from: ''});
 
-    const setMessageHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setMessageContent(e.target.value);
-    }
-
-    const sendMessageHandler = () => {
-        socketSendPrivateMessage({content: messageContent, to: selectedUser.id});
-        setMessages([...messages, {content: messageContent, from: 'self'}]);
-        setMessageContent('');
-    }
-
-    const keyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if(e.key === "Enter") {
-            sendMessageHandler();
-        }
-    }
-    //TODO перезаписывает сообщение может [socket]
     useEffect(() => {
-        if(messageData.content) {
-            setMessages([...messages, messageData])
-        }
-    }, [messageData]);
+        setContacts(onlineUsers);
+    }, [onlineUsers]);
 
     return (
         <Container height="fullHeight">
             <Contacts contacts={onlineUsers}/>
-            <div>
-                <h2>Сообщения:</h2>
-                {messages.map((recievedMessage) => <h4 key={nanoid()}>{`${recievedMessage.from}: ${recievedMessage.content}`}</h4>)}
-            </div>
-            
-            {
-                selectedUser.id
-                ? (<div>
-                        <input 
-                            type="text" 
-                            placeholder="Сообщение" 
-                            value={messageContent} 
-                            onChange={setMessageHandler}
-                            onKeyDown={keyPressHandler}
-                        />
-                        <button onClick={sendMessageHandler}>Отправить сообщение</button>
-                    </div>)
-                : null
-            }
+            <Chat />
         </Container>
     );
 }

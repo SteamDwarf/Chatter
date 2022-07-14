@@ -1,6 +1,7 @@
 interface user {
     id: string;
-    userName: string
+    userName: string;
+    messages: []
 }
 
 let users: user[] = [];

@@ -1,9 +1,9 @@
-import React, { FC } from 'react'
+import React, { FC, ReactNode } from 'react'
 import classes from './Button.module.css';
 import './Button.style.css';
 
 interface IButtonProps  {
-    children: string;
+    children: ReactNode;
     className?: string;
     onClick: () => void;
     size?: 'large' | 'medium' | 'small';
