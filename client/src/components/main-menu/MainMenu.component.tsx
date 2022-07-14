@@ -42,8 +42,8 @@ const MainMenu = () => {
     }, [messageData]);
 
     return (
-        <Container heightType="fullHeight">
-            <Contacts users={onlineUsers}/>
+        <Container height="fullHeight">
+            <Contacts contacts={onlineUsers}/>
             <div>
                 <h2>Сообщения:</h2>
                 {messages.map((recievedMessage) => <h4 key={nanoid()}>{`${recievedMessage.from}: ${recievedMessage.content}`}</h4>)}

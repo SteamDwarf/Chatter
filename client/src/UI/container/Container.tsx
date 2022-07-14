@@ -8,39 +8,40 @@ type ContentPostion = 'center-center' | 'left-center' | 'right-center' | 'center
 
 interface IContainerProps {
     children: ReactNode;
+    className?: string;
     contentPosition?: ContentPostion;
     contentRarity?: 'space-between' | 'space-around' | 'center' | '';
     typeDirection?: 'column' | 'row';
-    width?: string;
-    widthType?: 'fullWidth' | 'halfWidth' | 'quartWidth';
-    heightType?: 'fullHeight' | 'halfHeight' | 'quartHeight' | '';
+    width?: 'fullWidth' | 'halfWidth' | 'quartWidth';
+    height?: 'fullHeight' | 'halfHeight' | 'quartHeight' | '';
     shadow?: '' | 'volume'
 }
 
 
 const Container:FC<IContainerProps> = ({
-    children, 
+    children,
+    className,
     contentPosition = 'left-top',
     contentRarity,
     typeDirection = "row", 
-    heightType = '',
-    width,
-    widthType = 'fullWidth',
+    height = '',
+    width = 'fullWidth',
     shadow = ''
 }) => {
-    
-    const className = `
-        container  
+
+    const classNames = `
+        container
+        ${className}  
         ${classes[contentPosition]} 
         ${classes[typeDirection]} 
-        ${heightType ? classes[heightType] : ''}
+        ${height ? classes[height] : ''}
         ${contentRarity ? classes[contentRarity] : ''}
-        ${classes[widthType]}
+        ${classes[width]}
         ${shadow ? classes[shadow] : ''}
     `
 
     return (
-    <div className={className} style={width ? {width: `${width}%`} : {}}>
+    <div className={classNames}>
         {children}
     </div>
     )

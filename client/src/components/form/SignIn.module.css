@@ -1,3 +1,29 @@
-.signInContainerInner {
-    height: 50vh;
+.signInForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    min-width: 300px;
+    min-height: 300px;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #3B6EF7;
 }
+
+.submitBtn {
+    margin-top: 80px;
+}
+
+@media (max-width: 500px) {
+    .signInFormTitle {
+        font-size: 30px;
+    }
+}
+
+
+@media (max-width: 360px) {
+    .signInFormTitle {
+        font-size: 25px;
+    }
+}
+
+

@@ -9,7 +9,7 @@ interface ISidebarProps {
 
 const Sidebar:FC<ISidebarProps> = ({children, header, width}) => {
     return (
-        <Container width={width} typeDirection='column' contentPosition='left-top'>
+        <Container typeDirection='column' contentPosition='left-top'>
             {header}
             {children}
         </Container>

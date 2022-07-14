@@ -2,21 +2,29 @@
     border: 1px solid #3B6EF7;
     background-color: #3B6EF7;
     color: white;
+    transition: background-color 0.5s;
+}
+
+.contained.main:hover {
+    background-color: #2d51b5
 }
 
 .small {
     padding: 1%;
     min-width: 80px;
+    font-size: 14px;
 }
 
 .medium {
     padding: 2%;
     min-width: 100px;
+    font-size: 18px;
 }
 
 .large {
     padding: 3%;
     min-width: 130px;
+    font-size: 22px;
 }
 
 /*

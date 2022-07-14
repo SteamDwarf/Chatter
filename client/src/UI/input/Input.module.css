@@ -1,3 +1,12 @@
+.inputContainer {
+    position: relative;
+    width: 100%;
+}
+.input {
+    outline: none;
+}
+
+
 .main {
     border-color: #3B6EF7;
 }
@@ -57,5 +66,33 @@
 }
 .strong-smooth.large {
     border-radius: 24px
+}
+
+.inputClearBtn {
+    display: none;
+    position: absolute;
+    cursor: pointer;
+}
+
+.input:focus + .inputClearBtn {
+    display: inline;
+}
+
+.small + .inputClearBtn {
+    right: 1%;
+    top: 5%;
+    font-size: 20px;
+}
+
+.medium + .inputClearBtn {
+    right: 1%;
+    top: 13%;
+    font-size: 25px;
+}
+
+.large + .inputClearBtn {
+    right: 1%;
+    top: 20%;
+    font-size: 30px;
 }
 

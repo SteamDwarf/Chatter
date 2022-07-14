@@ -1,7 +1,8 @@
 import React, { FC } from 'react'
 import { useContext } from 'react'
 import { IUser, IUserContext, UserContext } from '../../context/userContext.context'
-import './UserItem.style.css';
+import Container from '../../UI/container/Container';
+import classes from './UserItem.module.css';
 
 const UserItem: FC<IUser> = ({userName, id}) => {
     const {setSelectedUser} = useContext<IUserContext>(UserContext);
@@ -11,7 +12,8 @@ const UserItem: FC<IUser> = ({userName, id}) => {
     }
 
     return (
-    <div className='user-item' onClick={onClickHandler}>
+    <div className={classes.userItem} onClick={onClickHandler}>
+        <h3 className={classes.userIcon}>{userName[0]}</h3>
         <h4>{userName}</h4>
     </div>
     )

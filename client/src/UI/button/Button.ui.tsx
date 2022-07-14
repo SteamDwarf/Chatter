@@ -4,6 +4,7 @@ import './Button.style.css';
 
 interface IButtonProps  {
     children: string;
+    className?: string;
     onClick: () => void;
     size?: 'large' | 'medium' | 'small';
     color?: 'succes' | 'error' | 'warning' | 'main';
@@ -14,6 +15,7 @@ interface IButtonProps  {
 
 const Button:FC<IButtonProps> = ({
         children, onClick,
+        className,
         size = 'medium', 
         color = 'main', 
         variant = 'contained',
@@ -21,8 +23,9 @@ const Button:FC<IButtonProps> = ({
         rounded
     }) => {
 
-    const className = `
+    const classNames = `
         btn 
+        ${className}
         ${classes[variant]} 
         ${classes[color]} 
         ${classes[size]}
@@ -31,7 +34,7 @@ const Button:FC<IButtonProps> = ({
     `    
 
     return (
-        <div className={className} onClick={onClick}>{children}</div>
+        <div className={classNames} onClick={onClick}>{children}</div>
     );
 }
 
