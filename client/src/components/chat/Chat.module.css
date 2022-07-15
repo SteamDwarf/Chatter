@@ -1,20 +1,56 @@
+.chat {
+    width: 70%;
+}
+
+.messagesContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding-right: 5px;
+    overflow-y: auto;
+}
+
+.messagesContainer::-webkit-scrollbar {
+    width: 10px;
+}
+
+.messagesContainer::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: rgb(216, 216, 216);
+}
+
+.messagesContainer::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #3760d0;
+}
+
 .chatInput {
     display: flex;
-    align-items: center;
     width: 100%;
+    padding-top: 5px;
+}
+
+.messageTextArea {
+    font-size: 20px;
 }
 
 .sendBtn{
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 50px;
+    width: 65px;
+    height: 65px;
     margin-right: 5px;
     background-color: #3B6EF7;
     border-radius: 10px;
     text-align: center;
     cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.sendBtn:hover {
+    background-color: #2d51b5;
 }
 
 .sendBtn img {

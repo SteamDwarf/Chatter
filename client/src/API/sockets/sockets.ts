@@ -1,6 +1,6 @@
 import { ErrorInfo, useState } from 'react';
 import io from 'socket.io-client';
-import { Message, MessageTo } from '../../ts-features/interfaces';
+import { IMessage} from '../../ts-features/interfaces';
 
 export enum SocketEvents {
     CONNECT_ERROR = 'connect_error',
@@ -40,8 +40,18 @@ export const useSocketOnEvent = <T>(event: SocketEvents, initState: T) => {
     return data;
 }
 
+export const useRecievedMessage = () => {
+    const [data, setData] = useState<IMessage>({id: '', content: '', from: '', to: '', date: ''});
 
-export const socketSendPrivateMessage = (data: Message) => {
+    socket.on(SocketEvents.PRIVATE_MESSAGE, (recievedData) => {
+        setData(recievedData);
+    })
+
+    return [data, setData];
+}
+
+
+export const socketSendPrivateMessage = (data: IMessage) => {
     socket.emit(SocketEvents.PRIVATE_MESSAGE, data);
 }
 

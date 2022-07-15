@@ -50,9 +50,9 @@ io.on("connection", (socket) => {
         socket.broadcast.emit(SocketEvents.USERS, getUsers());
     });
     
-    socket.on(SocketEvents.PRIVATE_MESSAGE, ({content, to, date, from}) => {
-        console.log({content, to, date, from});
-        socket.to(to).emit(SocketEvents.PRIVATE_MESSAGE, {content, from: socket.handshake.auth.userName, date, to: to});
+    socket.on(SocketEvents.PRIVATE_MESSAGE, (messageData) => {
+        console.log(messageData);
+        socket.to(messageData.to).emit(SocketEvents.PRIVATE_MESSAGE, messageData);
     });
 
 

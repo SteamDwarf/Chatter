@@ -1,5 +1,21 @@
 .contactsBlock {
     width: 30%;
     height: 100%;
+    padding-right: 5px;
     border-right: 2px solid #3B6EF7;
+    overflow-y: auto;
+}
+
+.contactsBlock::-webkit-scrollbar {
+    width: 10px;
+}
+
+.contactsBlock::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: rgb(216, 216, 216);
+}
+
+.contactsBlock::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #3760d0;
 }

@@ -1,14 +1,7 @@
-export interface Message {
+export interface IMessage {
+    id: string;
     content: string;
-    date: string | number;
+    date: string;
     from: string;
-    to: string;
-}
-
-export interface MessageFrom extends Message {
-    from: string;
-}
-
-export interface MessageTo extends Message {
     to: string;
 }
