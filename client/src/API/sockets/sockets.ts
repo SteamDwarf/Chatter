@@ -15,8 +15,8 @@ socket.onAny((event, ...args) => {
     console.log(event, args);
 });
 
-export const connectToServer = (userName: string) => {
-    socket.auth = {userName};
+export const connectToServer = (userName: string, color: string) => {
+    socket.auth = {userName, color};
     socket.connect();
 }
 

@@ -18,7 +18,7 @@ const ContactsHeader:FC<IContactsHeaderProps> = memo(({userFilter, setUserFilter
 
     return (
         <Container className={classes.contactsHeader} typeDirection="column">
-            <h3 className={classes.contactHeaderName}>{user}</h3>
+            <h3 className={classes.contactHeaderName}>{user.userName}</h3>
             <Input
                 value={userFilter}
                 valueSetter={setUserFilter}
@@ -33,4 +33,4 @@ const ContactsHeader:FC<IContactsHeaderProps> = memo(({userFilter, setUserFilter
     );
 });
 
-export default ContactsHeader;
+export default memo(ContactsHeader);

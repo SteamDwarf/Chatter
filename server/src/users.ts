@@ -1,10 +1,12 @@
-interface user {
+interface IUser {
     id: string;
     userName: string;
-    messages: []
+    messages: [];
+    sentNewMessage: boolean;
+    color: string;
 }
 
-let users: user[] = [];
+let users: IUser[] = [];
 
 //TODO настроить проверку уникальность имени
 /* exports.checkUniqUsername = (userName) => {
@@ -15,7 +17,7 @@ let users: user[] = [];
     return true;
 } */
 
-export const addUser = (user: user) => {
+export const addUser = (user: IUser) => {
     if(!users.find((joinedUser) => joinedUser.userName === user.userName)) {
         users.push(user);
         console.log(users);

@@ -40,7 +40,13 @@ io.use((socket, next) => {
 io.on("connection", (socket) => {
     console.log("Connected to server: ", socket.id);
 
-    addUser({id: socket.id, userName: socket.handshake.auth.userName, messages: []});
+    addUser({
+        id: socket.id, 
+        userName: socket.handshake.auth.userName, 
+        messages: [],
+        sentNewMessage: false,
+        color: socket.handshake.auth.color
+    });
     //socket.emit("users", getUsers());
     io.emit(SocketEvents.USERS, getUsers());
 

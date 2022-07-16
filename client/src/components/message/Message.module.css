@@ -1,29 +1,45 @@
-.message {
+.messageBlock {
+    display: flex;
     min-width: 120px;
-    max-width: 45%;
+    max-width: 600px;
     margin-bottom: 10px;
+}
+
+.other.messageBlock {
+    flex-direction: row-reverse;
+}
+
+.self.messageBlock {
+    align-self: flex-end;
+}
+
+.message {
+    max-width: 545px;
     padding: 10px;
-    border-radius: 10px;
-    color: rgb(221, 221, 221);
+    border-radius: 15px;
+}
+
+.other .message {
+    margin-left: 5px;
+    margin-right: 55px;
+    background-color: #e7d6ff;
+}
+.self .message {
+    margin-right: 5px;
+    margin-left: 55px;
+    background-color: rgb(207, 228, 255);
 }
 
 .messageText {
-    font-size: 18px;
+    font-size: 16px;
+    padding: 10px 0px;
 }
 
-.self {
-    align-self: flex-end;
-    background-color: #0b5d24;
-}
-
-.other {
-    background-color: #1d336f;
-}
 
 .messageDate {
-    margin-top: 15px;
     padding-top: 5px;
-    border-top: 1px solid rgb(221, 221, 221);
     text-align: right;
     font-size: 12px;
 }
+
+

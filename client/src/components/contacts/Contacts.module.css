@@ -1,5 +1,6 @@
 .contactsBlock {
     width: 30%;
+    max-width: 500px;
     height: 100%;
     padding-right: 5px;
     border-right: 2px solid #3B6EF7;

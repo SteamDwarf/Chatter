@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, Fragment, KeyboardEvent } from 'react'
+import React, { ChangeEvent, FC, KeyboardEvent, memo } from 'react'
 import classes from './Input.module.css';
 
 
@@ -52,4 +52,4 @@ const Input:FC<InputProps> = ({
     )
 }
 
-export default Input
+export default memo(Input);

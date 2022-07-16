@@ -1,0 +1,29 @@
+.roundLabel {
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+    padding-top: 8px;
+    border-radius: 50%;
+    text-align: center;
+    color: #fff;
+}
+
+.white {
+    background-color: white;
+}
+
+.red {
+    background-color: rgb(171, 21, 21);
+}
+
+.green {
+    background-color: rgb(16, 138, 16)
+}
+
+.purple {
+    background-color: purple;
+}
+
+.blue {
+    background-color: #3B6EF7;
+}

@@ -1,12 +1,10 @@
-import { ChangeEvent, FC, KeyboardEvent, useContext, useState, useEffect } from "react";
+import { ChangeEvent, FC, KeyboardEvent, useContext, useState, useEffect, useRef } from "react";
 import { IUserContext, UserContext } from "../../context/userContext.context";
 import { IMessage} from "../../ts-features/interfaces";
 import Container from "../../UI/container/Container";
-import Input from "../../UI/input/Input.ui";
 import classes from './Chat.module.css';
 import MessageLogo from '../../assets/icons/send-svgrepo-com (1).svg';
-import Button from "../../UI/button/Button.ui";
-import { SocketEvents, socketSendPrivateMessage, useRecievedMessage, useSocketOnEvent } from "../../API/sockets/sockets";
+import {socketSendPrivateMessage} from "../../API/sockets/sockets";
 import { nanoid } from "nanoid";
 import Message from "../message/Message.component";
 import TextArea from "../../UI/text-area/TextArea.component";
@@ -15,15 +13,16 @@ interface IChatProps {
 }
 
 const Chat:FC<IChatProps> = () => {
-    const {user, messages, selectedUser, setMessages} = useContext<IUserContext>(UserContext);
+    const {user, selectedUser, addMessage} = useContext<IUserContext>(UserContext);
     const [messageContent, setMessageContent] = useState('');
+    const chatEndpoint = useRef<HTMLDivElement>(null);
 
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setMessageContent(e.target.value);
     }
 
     const messagesShowing = (message: IMessage) => {
-        if(message.from === selectedUser.userName || (message.from === user && message.to === selectedUser.id)) {
+        if(message.from === selectedUser.userName || (message.from === user.userName && message.to === selectedUser.id)) {
             return <Message key={nanoid()} message={message}/>
         }
 
@@ -35,13 +34,13 @@ const Chat:FC<IChatProps> = () => {
             id: nanoid(), 
             content: messageContent, 
             to: selectedUser.id, 
-            from: user,  
+            from: user.userName,  
             date: `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`
         }
 
 
         socketSendPrivateMessage(mes);
-        setMessages([...messages, mes]);
+        addMessage(mes);
         setMessageContent('');
     }
     const keyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -50,11 +49,27 @@ const Chat:FC<IChatProps> = () => {
         }
     }
 
+    const scrollToBottom = () => {
+        chatEndpoint.current?.scrollIntoView(/* { behavior: "smooth" } */)
+    }
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [selectedUser]);
+
+    /* useEffect(() => {
+        //scrollToBottom();
+        if(messages[messages.length - 1].from === selectedUser.userName) {
+            scrollToBottom();
+        }
+    }, [messages, selectedUser]); */
+
     if(selectedUser.userName) {
         return (
             <Container className={classes.chat} typeDirection="column" contentPosition="left-bottom" height="fullHeight">
                 <div className={classes.messagesContainer}>
-                    {messages.map(recievedMessage => messagesShowing(recievedMessage))}
+                    {user.messages.map(recievedMessage => messagesShowing(recievedMessage))}
+                    <div ref={chatEndpoint}></div>
                 </div>
                 <div className={classes.chatInput}>
                     <div onClick={sendMessageHandler} className={classes.sendBtn}>
@@ -65,7 +80,7 @@ const Chat:FC<IChatProps> = () => {
                         value={messageContent} 
                         onChange={onChangeHandler}
                         onKeyDown={keyPressHandler}
-                        size='medium'
+                        size='small'
                         rounded="medium-smooth"
                         width="full"
                     />

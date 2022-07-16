@@ -1,11 +1,13 @@
-import React, {ChangeEvent, FC, KeyboardEvent, MouseEvent, useState} from "react";
+import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import { useContext } from "react";
 import { connectToServer, SocketEvents, useSocketOnError } from "../../API/sockets/sockets";
-import { IUserContext, UserContext } from "../../context/userContext.context";
+import { defaultUser, IUserContext, UserContext } from "../../context/userContext.context";
 import Button from "../../UI/button/Button.ui";
 import Container from "../../UI/container/Container";
 import Input from "../../UI/input/Input.ui";
 import classes from './SignIn.module.css';
+
+const colors = ['red', 'green', 'purple', 'blue'];
 
 const SignIn = () => {
     const {setUser} = useContext<IUserContext>(UserContext);
@@ -17,9 +19,12 @@ const SignIn = () => {
     }
 
     const signIn = () => {
-        connectToServer(userName);
+        const colorId = Math.round(Math.random() * (colors.length - 1));
+        const color = colors[colorId];
+
+        connectToServer(userName, color);
         //localStorage.setItem("user", user);
-        setUser(userName);
+        setUser({...defaultUser, userName, color});
     }
 
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {

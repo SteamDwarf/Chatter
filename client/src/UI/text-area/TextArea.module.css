@@ -5,6 +5,8 @@
 .textarea {
     border: 2px solid;
     outline: none;
+    resize: none;
+    overflow-y: hidden;
 }
 
 
@@ -15,7 +17,7 @@
 .small {
     padding: 5px;
     min-width: 50px;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .medium {

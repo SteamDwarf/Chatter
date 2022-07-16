@@ -1,28 +1,38 @@
 .userItem {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     width: 100%;
-    padding: 10px 0px 10px 5px;
+    margin-bottom: 5px;
+    padding: 10px 5px;
     border-radius: 10px;
     transition: background-color 0.3s;
     cursor: pointer;
+}
+
+.userData {
+    display: flex;
+    align-items: center;
 }
 
 .userItem:hover {
     background-color: rgb(207, 228, 255);
 }
 
-.userIcon {
-    width: 50px;
-    height: 50px;
-    padding-top: 5px;
-    border-radius: 50%;
-    border: 2px solid #3B6EF7;
-    margin-right: 15px;
-    text-align: center;
-    vertical-align: middle;
+.userItem.selected {
+    background-color: rgb(207, 228, 255);
 }
 
-.newMessage {
-    background-color: rgb(242, 121, 121);
+.userName {
+    margin-left: 15px;
+}
+
+.userNotificator {
+    width: 20px;
+    height: 20px;
+    padding-top: 1px;
+    background-color: #3B6EF7;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
 }
