@@ -1,6 +1,31 @@
 .chat {
-    width: 100%;
+    width: 70%;
     padding-bottom: 0px;
+}
+
+.chatHeader {
+    display: none;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    padding: 0px 10px;
+    border-bottom: 2px solid #3B6EF7;
+    background-color: #fff;
+}
+
+.backBtn {
+    width: 30px;
+    height: 30px;
+    margin-right: 40%;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.backBtn:hover {
+    transform: scale(1.1);
 }
 
 .messagesContainer {
@@ -30,13 +55,19 @@
 
 .chatInput {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     width: 100%;
     padding-top: 5px;
 }
 
 .messageTextArea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #3760d0;
+    border-radius: 10px;
     font-size: 20px;
+    resize: none;
+    outline: none;
 }
 
 .sendBtn{
@@ -71,4 +102,13 @@
         padding-right: 5px;
     }
     
+}
+
+@media (max-width: 750px) {
+    .chat {
+        width: 100%;
+    }
+    .chatHeader {
+        display: flex;
+    }
 }

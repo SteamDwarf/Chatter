@@ -20,3 +20,10 @@
     border-radius: 10px;
     background-color: #3760d0;
 }
+
+@media (max-width: 750px) {
+    .contactsBlock {
+        width: 100%;
+        max-width: 100%;
+    }
+}

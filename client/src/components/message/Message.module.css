@@ -1,6 +1,5 @@
 .messageBlock {
     display: flex;
-    min-width: 120px;
     max-width: 600px;
     margin-bottom: 10px;
 }
@@ -14,6 +13,7 @@
 }
 
 .message {
+    min-width: 120px;
     max-width: 545px;
     padding: 10px;
     border-radius: 15px;
@@ -33,6 +33,7 @@
 .messageText {
     font-size: 16px;
     padding: 10px 0px;
+    white-space: pre-wrap;
 }
 
 

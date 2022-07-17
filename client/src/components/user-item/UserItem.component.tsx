@@ -17,6 +17,8 @@ const UserItem:FC<IUserItemProps> = ({contact}) => {
         setSelectedUser({...contact, sentNewMessage: false});
     }
 
+    //TODO корректно отображаются должны большие имена
+
     return (
         <div className={classNames} onClick={onClickHandler}>
             <div className={classes.userData}>
