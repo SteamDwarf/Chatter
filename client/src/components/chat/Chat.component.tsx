@@ -56,7 +56,9 @@ const Chat:FC<IChatProps> = () => {
 
     const keyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {        
         if(e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
             sendMessageHandler();
+            return;
         }
 
     }
