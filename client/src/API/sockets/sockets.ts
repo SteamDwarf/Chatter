@@ -1,4 +1,4 @@
-import { ErrorInfo, useState } from 'react';
+import { useState } from 'react';
 import io from 'socket.io-client';
 import { IMessage} from '../../ts-features/interfaces';
 
@@ -7,7 +7,8 @@ export enum SocketEvents {
     CONNECT_FAILED = 'CONNECT_FAILED',
     PRIVATE_MESSAGE = 'private_message',
     CONNECTION = 'connection',
-    USERS = 'users'
+    USERS = 'users',
+    GET_MESSAGES = 'get_messages'
 }
 
 const socketServerURL = 'http://localhost:5000';
@@ -66,9 +67,23 @@ export const useRecievedMessage = (): [IMessage | null, (message: IMessage | nul
     return [data, setData];
 }
 
+export const useContactMessages = (): [IMessage[], (message: IMessage[]) => void] => {
+    const [contactMessages, setContactMessages] = useState<IMessage[]>([]);
+
+    socket.on(SocketEvents.GET_MESSAGES, (recievedMessages) => {
+        setContactMessages(recievedMessages);
+    })
+
+    return [contactMessages, setContactMessages];
+}
+
 
 export const socketSendPrivateMessage = (data: IMessage) => {
     socket.emit(SocketEvents.PRIVATE_MESSAGE, data);
+}
+
+export const socketGetContactMessages = (userName: string, contactName: string) => {
+    socket.emit(SocketEvents.GET_MESSAGES, userName, contactName);
 }
 
 /* export const socketOnConnectError = (setErrorFunc) => {

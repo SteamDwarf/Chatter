@@ -1,21 +1,31 @@
-const messages = [
-    {from: 'Vasya',
-     messages: [
-        {to: 'Petya', content: 'hello'},
-        {to: 'Dima', content: 'bye'}
-     ]},
-    {from: 'Petya',
-     messages: [
-        {to: 'Vasya', content: 'hello'},
-        {to: 'Dima', content: 'bye'}
-     ]},
-];
-
-export const getMessages = () => {
-    return messages;
+export interface IMessage {
+   id: string;
+   content: string;
+   from: string;
+   to: string;
+   date: string;
 }
 
-export const getUserMessage = (userId: string) => {
-    
+const messages: Map<string, Map<string, IMessage[]>> = new Map();
+
+export const getMessages = (userName: string, contact: string) => {
+   return messages.get(userName)?.get(contact) || [];
 }
 
+export const saveMessage = (message: IMessage) => {
+   addMessage(message.from, message.to, message);
+   addMessage(message.to, message.from, message);
+}
+
+const addMessage = (user1: string, user2: string, message: IMessage) => {
+   const senderMessages = messages.get(user1);
+
+   if(senderMessages) {
+      senderMessages.get(user2) 
+         ? senderMessages.get(user2)?.push(message) 
+         : senderMessages.set(user2, [message]);
+      return;
+   }
+
+   messages.set(user1, new Map([[user2, [message]]]));
+}

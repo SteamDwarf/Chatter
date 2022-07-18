@@ -1,39 +1,14 @@
 import React, { createContext, FC, useEffect, useMemo, useState } from "react";
-import { SocketEvents, useRecievedMessage, useSocketOnConnect, useSocketOnEvent } from "../API/sockets/sockets";
-import { IMessage } from "../ts-features/interfaces";
-
-export interface IUserMessages {
-    userName: string;
-    messages: IMessage[];
-}
-
-export interface IUser {
-    id: string;
-    userName: string;
-    //messages: IMessage[];
-    messages: IUserMessages[];
-    sentNewMessage: boolean;
-    color: string;
-    isOnline: boolean;
-}
-
-export const defaultUser: IUser = {
-    id: '', 
-    userName: '', 
-    //messages: [], 
-    messages: [],
-    sentNewMessage: false, 
-    color: 'white', 
-    isOnline: false
-};
-
-//TODO убрать состояние messages и перенести его в состояние user
+import { SocketEvents, useContactMessages, useRecievedMessage, useSocketOnConnect, useSocketOnEvent } from "../API/sockets/sockets";
+import { defaultUser, IMessage, IUser } from "../ts-features/interfaces";
+import { saveMessage } from "../utils/messageStorage.utils";
 
 export interface IUserContext {
     user: IUser;
     selectedUser: IUser;
     contacts: IUser[];
     isLogsIn: boolean;
+    contactMessages: IMessage[];
 
     setUser: (user: IUser) => void;
     setSelectedUser: (selectedUser: IUser) => void;
@@ -49,6 +24,7 @@ const defaultState: IUserContext = {
     selectedUser: defaultUser,
     contacts: [],
     isLogsIn: false,
+    contactMessages: [],
 
     setUser: (_user) => null,
     setSelectedUser: (_selectedUser) => null,
@@ -87,6 +63,7 @@ export const UserProvider: FC<{children: React.ReactNode}> = ({children}) => {
     const [isLogsIn, setIsLogsIn] = useState(false);
     const onlineUsers = useSocketOnEvent<IUser[]>(SocketEvents.USERS, []);
     const userData = useSocketOnConnect();
+    const [contactMessages, setContactMessages] = useContactMessages();
 
     const updateUserNewMessageState = (userName: string, state: boolean) => {
         const sender = contacts.find(contact => contact.userName === userName) as IUser;
@@ -97,19 +74,7 @@ export const UserProvider: FC<{children: React.ReactNode}> = ({children}) => {
     };
 
     const addMessage = (message: IMessage) => {
-        //setUser({...user, messages: [...user.messages, {...message}]});
-
-        const contactName = message.from !== user.userName ? message.from : message.to;
-        const contactMessagesObj = user.messages.find(mesObj => mesObj.userName === contactName);
-        const otherMessages = user.messages.filter(mesObj => mesObj.userName !== contactName);
-
-        if(contactMessagesObj) {
-            contactMessagesObj.messages.push(message);
-            setUser({...user, messages: [...otherMessages, contactMessagesObj]});
-            return;
-        }
-        
-        setUser({...user, messages: [...user.messages, {userName: contactName, messages: [message]}]});
+        setContactMessages([...contactMessages, message]);
     }
 
     const value: IUserContext = {
@@ -117,6 +82,7 @@ export const UserProvider: FC<{children: React.ReactNode}> = ({children}) => {
         selectedUser, 
         contacts, 
         isLogsIn,
+        contactMessages,
         setUser, 
         setSelectedUser, 
         setContacts,
@@ -130,12 +96,15 @@ export const UserProvider: FC<{children: React.ReactNode}> = ({children}) => {
     }, [onlineUsers]);
 
     useEffect(() => {
-        console.log(messageData);
+
         if(messageData) {
-            addMessage(messageData);
 
             if(messageData.from !== user.userName && messageData.from !== selectedUser.userName) {
                 updateUserNewMessageState(messageData.from, true);
+            } 
+
+            if(messageData.from === selectedUser.userName || (messageData.from === user.userName && messageData.to === selectedUser.userName)) {
+                addMessage(messageData);
             }
 
             setMessageData(null);

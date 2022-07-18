@@ -1,5 +1,6 @@
 import { ChangeEvent, FC, KeyboardEvent, useContext, useState, useEffect, useRef } from "react";
-import { defaultUser, IUserContext, UserContext } from "../../context/userContext.context";
+import { IUserContext, UserContext } from "../../context/userContext.context";
+import { defaultUser } from "../../ts-features/interfaces";
 import { IMessage} from "../../ts-features/interfaces";
 import Container from "../../UI/container/Container";
 import classes from './Chat.module.css';
@@ -8,14 +9,13 @@ import BackSvg from '../../assets/icons/previous-arrows-svgrepo-com.svg';
 import {socketSendPrivateMessage} from "../../API/sockets/sockets";
 import { nanoid } from "nanoid";
 import Message from "../message/Message.component";
-import TextArea from "../../UI/text-area/TextArea.component";
 import { TextareaAutosize } from "@mui/material";
 
 interface IChatProps {
 }
 
 const Chat:FC<IChatProps> = () => {
-    const {user, selectedUser, setSelectedUser, addMessage} = useContext<IUserContext>(UserContext);
+    const {user, selectedUser, setSelectedUser, addMessage, contactMessages} = useContext<IUserContext>(UserContext);
     const [messageContent, setMessageContent] = useState('');
     const chatEndpoint = useRef<HTMLDivElement>(null);
 
@@ -25,14 +25,6 @@ const Chat:FC<IChatProps> = () => {
 
     const backBtnHandler = () => {
         setSelectedUser(defaultUser);
-    }
-
-    const messagesShowing = (message: IMessage) => {
-        if(message.from === selectedUser.userName || (message.from === user.userName && message.to === selectedUser.userName)) {
-            return <Message key={nanoid()} message={message}/>
-        }
-
-        return null;
     }
 
     const sendMessageHandler = () => {
@@ -73,7 +65,6 @@ const Chat:FC<IChatProps> = () => {
             scrollToBottom();
         }
     }, [messages, selectedUser]); */
-    console.log(user.messages);
 
     if(selectedUser.userName) {
         return (
@@ -83,8 +74,7 @@ const Chat:FC<IChatProps> = () => {
                     <h3>{selectedUser.userName}</h3>
                 </div>
                 <div className={classes.messagesContainer}>
-                    {/* {user.messages.map(recievedMessage => messagesShowing(recievedMessage))} */}
-                    {user.messages.find(messageObj => messageObj.userName === selectedUser.userName)?.messages.map(recievedMessage => messagesShowing(recievedMessage))}
+                    {contactMessages.map(message => <Message key={message.id} message={message}/>)}
                     <div ref={chatEndpoint}></div>
                 </div>
                 <div className={classes.chatInput}>

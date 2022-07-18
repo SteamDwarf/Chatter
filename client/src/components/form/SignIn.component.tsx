@@ -1,7 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import { useContext } from "react";
 import { connectToServer, SocketEvents, useSocketOnError } from "../../API/sockets/sockets";
-import { defaultUser, IUserContext, UserContext } from "../../context/userContext.context";
+import { IUserContext, UserContext } from "../../context/userContext.context";
 import Button from "../../UI/button/Button.ui";
 import Container from "../../UI/container/Container";
 import Input from "../../UI/input/Input.ui";
