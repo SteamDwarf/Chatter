@@ -4,7 +4,9 @@ import { IMessage} from '../../ts-features/interfaces';
 
 export enum SocketEvents {
     CONNECT_ERROR = 'connect_error',
+    CONNECT_FAILED = 'CONNECT_FAILED',
     PRIVATE_MESSAGE = 'private_message',
+    CONNECTION = 'connection',
     USERS = 'users'
 }
 
@@ -20,10 +22,24 @@ export const connectToServer = (userName: string, color: string) => {
     socket.connect();
 }
 
-export const useSocketOnError = (event: SocketEvents) => {
+export const useSocketOnConnect = () => {
+    const [userData, setUserData] = useState(null);
+
+    socket.on(SocketEvents.CONNECTION, (user) => {
+        setUserData(user);
+    });
+
+    return userData;
+}
+
+export const useSocketOnError = () => {
     const [error, setError] = useState('');
 
-    socket.on(event, (error) => {
+    socket.on(SocketEvents.CONNECT_ERROR, (error) => {
+        setError(error.message);
+    });
+
+    socket.on(SocketEvents.CONNECT_FAILED, (error) => {
         setError(error.message);
     })
 
@@ -40,8 +56,8 @@ export const useSocketOnEvent = <T>(event: SocketEvents, initState: T) => {
     return data;
 }
 
-export const useRecievedMessage = () => {
-    const [data, setData] = useState<IMessage>({id: '', content: '', from: '', to: '', date: ''});
+export const useRecievedMessage = (): [IMessage | null, (message: IMessage | null) => void] => {
+    const [data, setData] = useState<IMessage | null>(null);
 
     socket.on(SocketEvents.PRIVATE_MESSAGE, (recievedData) => {
         setData(recievedData);

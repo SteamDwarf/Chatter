@@ -10,9 +10,9 @@ import classes from './SignIn.module.css';
 const colors = ['red', 'green', 'purple', 'blue'];
 
 const SignIn = () => {
-    const {setUser} = useContext<IUserContext>(UserContext);
+    const {isLogsIn, setIsLogsIn} = useContext<IUserContext>(UserContext);
     const [userName, setUserName] = useState('');
-    const signInError = useSocketOnError(SocketEvents.CONNECT_ERROR);
+    const signInError = useSocketOnError();
 
     const setUserNameHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setUserName(e.target.value);
@@ -23,8 +23,8 @@ const SignIn = () => {
         const color = colors[colorId];
 
         connectToServer(userName, color);
+        setIsLogsIn(true);
         //localStorage.setItem("user", user);
-        setUser({...defaultUser, userName, color});
     }
 
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -50,6 +50,7 @@ const SignIn = () => {
                 />
                 <Button onClick={signIn} size='medium' rounded="low-smooth" width="full">Войти</Button>
                 <h4>{signInError}</h4>
+                { isLogsIn && !signInError ? <h4>Подождите...</h4> : null}
             </div>
         </Container>
     );

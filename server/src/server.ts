@@ -2,7 +2,8 @@ import * as express from "express";
 import * as http from "http";
 import * as cors from "cors";
 import { Server } from "socket.io";
-import { addUser, deleteUser, getUsers } from "./users";
+import { addMessage, addUser, connectUser, disconnectUser, findUser, getUsers, IUser} from "./users";
+import {v4 as uuidv4} from 'uuid';
 
 const app = express();
 const server = http.createServer(app);
@@ -33,32 +34,49 @@ io.use((socket, next) => {
         return next(new Error("Введите имя пользователя."));
     }
 
-    socket.handshake.auth.userName = userName;
     next();
 });
 
 io.on("connection", (socket) => {
-    console.log("Connected to server: ", socket.id);
+    console.log("Connected to server: ", socket.handshake.auth.userName);
 
-    addUser({
-        id: socket.id, 
-        userName: socket.handshake.auth.userName, 
-        messages: [],
-        sentNewMessage: false,
-        color: socket.handshake.auth.color
-    });
-    //socket.emit("users", getUsers());
+    let connectingUser = findUser(socket.handshake.auth.userName) as IUser;
+
+    if(!connectingUser) {
+        const userID = uuidv4();
+        
+        connectingUser = {
+            id: userID,
+            userName: socket.handshake.auth.userName,
+            messages: [],
+            sentNewMessage: false,
+            color: socket.handshake.auth.color,
+            isOnline: true
+        }
+
+        addUser(connectingUser);
+
+    } else {
+        connectingUser.isOnline = true;
+        connectUser(connectingUser);
+    }
+    
+    socket.join(connectingUser.userName);
     io.emit(SocketEvents.USERS, getUsers());
+    io.to(connectingUser.userName).emit('connection', connectingUser);
+
 
     socket.on("disconnect", () => {
-        console.log("Disconnected from server: ", socket.id);
-        deleteUser(socket.id);
+        console.log("Disconnected from server: ", socket.handshake.auth.userName);
+        
+        disconnectUser(socket.handshake.auth.userName);
         socket.broadcast.emit(SocketEvents.USERS, getUsers());
     });
     
     socket.on(SocketEvents.PRIVATE_MESSAGE, (messageData) => {
         console.log(messageData);
         socket.to(messageData.to).emit(SocketEvents.PRIVATE_MESSAGE, messageData);
+        addMessage(messageData);
     });
 
 

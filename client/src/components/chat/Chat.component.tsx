@@ -28,7 +28,7 @@ const Chat:FC<IChatProps> = () => {
     }
 
     const messagesShowing = (message: IMessage) => {
-        if(message.from === selectedUser.userName || (message.from === user.userName && message.to === selectedUser.id)) {
+        if(message.from === selectedUser.userName || (message.from === user.userName && message.to === selectedUser.userName)) {
             return <Message key={nanoid()} message={message}/>
         }
 
@@ -39,7 +39,7 @@ const Chat:FC<IChatProps> = () => {
         const mes: IMessage = {
             id: nanoid(), 
             content: messageContent, 
-            to: selectedUser.id, 
+            to: selectedUser.userName, 
             from: user.userName,  
             date: `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`
         }
@@ -73,6 +73,7 @@ const Chat:FC<IChatProps> = () => {
             scrollToBottom();
         }
     }, [messages, selectedUser]); */
+    console.log(user.messages);
 
     if(selectedUser.userName) {
         return (
@@ -82,7 +83,8 @@ const Chat:FC<IChatProps> = () => {
                     <h3>{selectedUser.userName}</h3>
                 </div>
                 <div className={classes.messagesContainer}>
-                    {user.messages.map(recievedMessage => messagesShowing(recievedMessage))}
+                    {/* {user.messages.map(recievedMessage => messagesShowing(recievedMessage))} */}
+                    {user.messages.find(messageObj => messageObj.userName === selectedUser.userName)?.messages.map(recievedMessage => messagesShowing(recievedMessage))}
                     <div ref={chatEndpoint}></div>
                 </div>
                 <div className={classes.chatInput}>
