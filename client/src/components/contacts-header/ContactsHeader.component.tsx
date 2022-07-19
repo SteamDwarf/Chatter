@@ -1,8 +1,11 @@
+import { DarkMode, LightMode } from "@mui/icons-material";
+import { TextField } from "@mui/material";
 import { ChangeEvent, FC, memo, useContext, useState } from "react";
 import { IUserContext, UserContext } from "../../context/userContext.context";
+import { THEMES } from "../../ts-features/enums";
 import Container from "../../UI/container/Container";
 import Input from "../../UI/input/Input.ui";
-import classes from './ContactsHeader.module.css';
+import './ContactsHeader.css';
 
 interface IContactsHeaderProps {
     userFilter: string;
@@ -10,15 +13,26 @@ interface IContactsHeaderProps {
 }
 
 const ContactsHeader:FC<IContactsHeaderProps> = memo(({userFilter, setUserFilter}) => {
-    const {user} = useContext<IUserContext>(UserContext);
+    const {user, theme, setTheme} = useContext<IUserContext>(UserContext);
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setUserFilter(e.target.value);
     }
 
+    const themeBtnHandler = () => {
+        setTheme(theme === THEMES.LIGHT ? THEMES.DARK : THEMES.LIGHT);
+    }
+
     return (
-        <Container className={classes.contactsHeader} typeDirection="column">
-            <h3 className={classes.contactHeaderName}>{user.userName}</h3>
+        <Container className='contact_header' typeDirection="column">
+            <div className='contact_header_user-data'>
+                <h4 className='contact_header_user-name'>{user.userName}</h4>
+                {
+                    theme === THEMES.LIGHT
+                    ? <LightMode color="warning" fontSize="large" className='theme-btn' onClick={themeBtnHandler}/>
+                    : <DarkMode color="primary" fontSize="large" className='theme-btn' onClick={themeBtnHandler}/>
+                }
+            </div>
             <Input
                 value={userFilter}
                 valueSetter={setUserFilter}

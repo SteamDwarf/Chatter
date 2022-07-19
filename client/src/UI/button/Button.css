@@ -1,27 +1,44 @@
-.contained.main {
+.btn {
+    outline: none;
+    text-align: center;
+    cursor: pointer;
+}
+
+.btn.contained.main {
     border: 1px solid #3B6EF7;
     background-color: #3B6EF7;
     color: white;
     transition: background-color 0.5s;
 }
 
-.contained.main:hover {
+.btn.contained.main:hover {
     background-color: #2d51b5;
 }
 
-.small {
+.btn.contained.main:disabled {
+    border-color: #a4baf6;
+    background-color: #a4baf6;
+}
+
+.btn.contained.main:hover:disabled {
+    border-color: #a4baf6;
+    background-color: #a4baf6;
+}
+
+
+.btn.small {
     padding: 1%;
     min-width: 80px;
     font-size: 14px;
 }
 
-.medium {
+.btn.medium {
     padding: 2%;
     min-width: 100px;
     font-size: 18px;
 }
 
-.large {
+.btn.large {
     padding: 3%;
     min-width: 130px;
     font-size: 22px;
@@ -33,33 +50,33 @@
 ===========================================
 */
 
-.low-smooth.small {
+.btn.low-smooth.small {
     border-radius: 4px;
 }
-.low-smooth.medium {
+.btn.low-smooth.medium {
     border-radius: 8px;
 }
-.low-smooth.large {
+.btn.low-smooth.large {
     border-radius: 16px;
 }
 
-.medium-smooth.small {
+.btn.medium-smooth.small {
     border-radius: 8px
 }
-.medium-smooth.medium {
+.btn.medium-smooth.medium {
     border-radius: 16px
 }
-.medium-smooth.large {
+.btn.medium-smooth.large {
     border-radius: 24px
 }
 
-.strong-smooth.small {
+.btn.strong-smooth.small {
     border-radius: 16px
 }
-.strong-smooth.medium {
+.btn.strong-smooth.medium {
     border-radius: 32px
 }
-.strong-smooth.large {
+.btn.strong-smooth.large {
     border-radius: 64px
 }
 
@@ -69,11 +86,11 @@
 ===========================================
 */
 
-.half {
+.btn.half {
     width: 50%;
 }
 
-.full {
+.btn.full {
     width: 100%;
 }
 

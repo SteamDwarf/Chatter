@@ -2,3 +2,24 @@
     width: 100%;
     height: 100vh;
 }
+
+.light.App {
+    background-color: #e6e6e6;
+}
+
+.dark.App {
+    background-color: #172027;
+}
+
+.app_container {
+    max-width: 1200px;
+    height: 100vh;
+    margin: 0 auto;
+}
+
+.light .app_container {
+    background-color: #fff;
+}
+.dark .app_container {
+    background-color: #132331;
+}

@@ -4,7 +4,7 @@ import { socketGetContactMessages } from '../../API/sockets/sockets';
 import { IUserContext, UserContext } from '../../context/userContext.context'
 import { IUser } from '../../ts-features/interfaces';
 import RoundLabel from '../../UI/round-label/RoundLabel.component';
-import classes from './UserItem.module.css';
+import './UserItem.css';
 
 interface IUserItemProps {
     contact: IUser;
@@ -12,7 +12,7 @@ interface IUserItemProps {
 
 const UserItem:FC<IUserItemProps> = ({contact}) => {
     const {user, selectedUser, setSelectedUser, updateUserNewMessageState} = useContext<IUserContext>(UserContext);
-    const classNames = `${classes.userItem} ${selectedUser.userName === contact.userName ? classes.selected : ''}`;
+    const classNames = `user-item ${selectedUser.userName === contact.userName ? 'selected' : ''}`;
 
     const onClickHandler = () => {
         updateUserNewMessageState(contact.userName, false);
@@ -20,15 +20,21 @@ const UserItem:FC<IUserItemProps> = ({contact}) => {
         socketGetContactMessages(user.userName, contact.userName);
     }
 
-    //TODO корректно отображаются должны большие имена
 
     return (
         <div className={classNames} onClick={onClickHandler}>
-            <div className={classes.userData}>
-                <RoundLabel color={contact.color} label={contact.userName}/>   
-                <h4 className={classes.userName}>{contact.userName}</h4>
+            <div className='user-item_data'>
+                <RoundLabel color={contact.color} label={contact.userName}/> 
+                <div className='user-item_info'>
+                    <h5 className='user-item_name'>{contact.userName}</h5>
+                    <p className='user-item_online-status'>
+                        <span className={`online-status_lamp ${contact.isOnline ? 'online' : 'offline'}`}></span>
+                        <span>{contact.isOnline ? 'online' : 'offline'}</span>
+                    </p>
+                </div>
+                
             </div>
-            {contact.sentNewMessage ? <div className={classes.userNotificator}>!</div> : null}
+            {contact.sentNewMessage ? <div className='user-item_notificator'>!</div> : null}
         </div>
     )
 }

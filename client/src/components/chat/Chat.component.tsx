@@ -3,13 +3,13 @@ import { IUserContext, UserContext } from "../../context/userContext.context";
 import { defaultUser } from "../../ts-features/interfaces";
 import { IMessage} from "../../ts-features/interfaces";
 import Container from "../../UI/container/Container";
-import classes from './Chat.module.css';
-import MessageLogo from '../../assets/icons/send-svgrepo-com (1).svg';
-import BackSvg from '../../assets/icons/previous-arrows-svgrepo-com.svg';
 import {socketSendPrivateMessage} from "../../API/sockets/sockets";
 import { nanoid } from "nanoid";
 import Message from "../message/Message.component";
 import { TextareaAutosize } from "@mui/material";
+import SendIcon from '@mui/icons-material/Send';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import './Chat.css';
 
 interface IChatProps {
 }
@@ -36,14 +36,13 @@ const Chat:FC<IChatProps> = () => {
             date: `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`
         }
 
-
         socketSendPrivateMessage(mes);
         addMessage(mes);
         setMessageContent('');
     }
 
     const scrollToBottom = () => {
-        chatEndpoint.current?.scrollIntoView(/* { behavior: "smooth" } */)
+        chatEndpoint.current?.scrollIntoView();
     }
 
     const keyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {        
@@ -52,39 +51,34 @@ const Chat:FC<IChatProps> = () => {
             sendMessageHandler();
             return;
         }
-
     }
 
     useEffect(() => {
         scrollToBottom();
-    }, [selectedUser]);
-
-    /* useEffect(() => {
-        //scrollToBottom();
-        if(messages[messages.length - 1].from === selectedUser.userName) {
-            scrollToBottom();
-        }
-    }, [messages, selectedUser]); */
+    }, [contactMessages]);
 
     if(selectedUser.userName) {
         return (
-            <Container className={classes.chat} typeDirection="column" contentPosition="left-bottom" height="fullHeight">
-                <div className={classes.chatHeader}>
-                    <img className={classes.backBtn} src={BackSvg} alt="Назад" onClick={backBtnHandler}/>
-                    <h3>{selectedUser.userName}</h3>
+            <Container className='chat' typeDirection="column" contentPosition="left-bottom" height="fullHeight">
+                <div className='chat_header'>
+                    <div className='chat_back-btn' onClick={backBtnHandler}>
+                        <ArrowBackIcon fontSize="large"/>
+                    </div>
+                    <h5 className='chat_header_selected-user'>{selectedUser.userName}</h5>
+                    <div className='chat_header_selected-user_after'></div>
                 </div>
-                <div className={classes.messagesContainer}>
+                <div className='chat_messages-container'>
                     {contactMessages.map(message => <Message key={message.id} message={message}/>)}
                     <div ref={chatEndpoint}></div>
                 </div>
-                <div className={classes.chatInput}>
-                    <div onClick={sendMessageHandler} className={classes.sendBtn}>
-                        <img src={MessageLogo} alt="Отправить сообщение" />
+                <div className='chat_input'>
+                    <div onClick={sendMessageHandler} className='chat_send-btn'>
+                        <SendIcon className="chat_send-btn_svg"/>
                     </div>
                     <TextareaAutosize 
                         value={messageContent} 
                         onChange={onChangeHandler}
-                        className={classes.messageTextArea}
+                        className='chat_message-text-area'
                         onKeyDown={keyPressHandler}
                     />
                 </div>

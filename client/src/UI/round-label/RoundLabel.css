@@ -1,4 +1,4 @@
-.roundLabel {
+.round-label {
     width: 50px;
     height: 50px;
     min-width: 50px;
@@ -8,22 +8,22 @@
     color: #fff;
 }
 
-.white {
+.round-label.white {
     background-color: white;
 }
 
-.red {
+.round-label.red {
     background-color: rgb(171, 21, 21);
 }
 
-.green {
+.round-label.green {
     background-color: rgb(16, 138, 16)
 }
 
-.purple {
+.round-label.purple {
     background-color: purple;
 }
 
-.blue {
+.round-label.blue {
     background-color: #3B6EF7;
 }

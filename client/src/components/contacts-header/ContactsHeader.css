@@ -1,0 +1,25 @@
+
+.contact_header {
+    margin-bottom: 15px;
+}
+
+.contact_header_user-data {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.contact_header_user-name {
+    margin-right: 5px;
+    overflow: hidden;
+}
+
+.dark .contact_header_user-name {
+    color: #D9D9D9;
+}
+
+.theme-btn {
+    cursor: pointer;
+}

@@ -1,11 +1,12 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import React, {ChangeEvent, KeyboardEvent, useEffect, useState} from "react";
 import { useContext } from "react";
-import { connectToServer, SocketEvents, useSocketOnError } from "../../API/sockets/sockets";
+import { connectToServer, useSocketOnError } from "../../API/sockets/sockets";
 import { IUserContext, UserContext } from "../../context/userContext.context";
 import Button from "../../UI/button/Button.ui";
 import Container from "../../UI/container/Container";
 import Input from "../../UI/input/Input.ui";
-import classes from './SignIn.module.css';
+import FormMessage from "../form-message/FormMessage.component";
+import './SignIn.css';
 
 const colors = ['red', 'green', 'purple', 'blue'];
 
@@ -33,10 +34,14 @@ const SignIn = () => {
         }
     }
 
+    useEffect(() => {
+        setIsLogsIn(false);
+    }, [signInError]);
+
     return (
         <Container contentPosition="center-center" height="fullHeight">
-            <div className={classes.signInForm}>
-                <h2 className={classes.signInFormTitle}>Добро пожаловать в Chatter</h2>
+            <div className="sign-in-form">
+                <h2 className="sign-in-form_title">Добро пожаловать в Chatter</h2>
                 <Input
                     type="text" 
                     placeholder="Имя пользователя" 
@@ -48,9 +53,10 @@ const SignIn = () => {
                     size="medium"
                     rounded="low-smooth"
                 />
-                <Button onClick={signIn} size='medium' rounded="low-smooth" width="full">Войти</Button>
-                <h4>{signInError}</h4>
-                { isLogsIn && !signInError ? <h4>Подождите...</h4> : null}
+                <Button disabled={isLogsIn ? true : false} onClick={signIn} size='medium' rounded="low-smooth" width="full">Войти</Button>
+                <div className="sign-in-form_message">
+                    <FormMessage isLoading={isLogsIn} error={signInError}/>
+                </div>
             </div>
         </Container>
     );

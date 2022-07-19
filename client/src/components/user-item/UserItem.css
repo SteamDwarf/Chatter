@@ -1,0 +1,81 @@
+.user-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 5px;
+    padding: 10px 5px;
+    border-radius: 10px;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.dark .user-item {
+    color: #D9D9D9;
+}
+
+.user-item_data {
+    width: 90%;
+    display: flex;
+    align-items: center;
+}
+
+.light .user-item:hover {
+    background-color: rgb(207, 228, 255);
+}
+
+.dark .user-item:hover {
+    background-color: #2A3C4B;
+}
+
+.light .user-item.selected {
+    background-color: rgb(207, 228, 255);
+}
+
+.dark .user-item.selected {
+    background-color: #2A3C4B;
+}
+
+.user-item_info {
+    max-width: 80%;
+    margin-left: 15px;
+}
+
+.user-item_name {
+    
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+    
+
+.user-item_online-status {
+    font-size: 14px;
+}
+
+.online-status_lamp {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+    border-radius: 50%;
+}
+
+.online-status_lamp.online {
+    background-color: green;
+}
+
+.online-status_lamp.offline {
+    background-color: rgb(253, 57, 57);
+}
+
+.user-item_notificator {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    margin-left: 5px;
+    padding-top: 1px;
+    background-color: #1976d2;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+}

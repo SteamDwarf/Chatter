@@ -3,7 +3,7 @@ import { IUserContext, UserContext } from '../../context/userContext.context';
 import Container from '../../UI/container/Container';
 import ContactsHeader from '../contacts-header/ContactsHeader.component';
 import UserItem from '../user-item/UserItem.component';
-import classes from './Contacts.module.css';
+import './Contacts.css';
 
 const Contacts = () => {
     const {user, contacts} = useContext<IUserContext>(UserContext);
@@ -18,12 +18,14 @@ const Contacts = () => {
     useEffect(filteringUsers, [filter, contacts]);
 
     return (
-        <Container className={classes.contactsBlock} typeDirection='column'>
+        <Container className='contacts-block' typeDirection='column'>
             <ContactsHeader userFilter={filter} setUserFilter={setFilter}/>
-            {filteredContacts.map(contact => contact.userName !== user.userName 
-                ? <UserItem key={contact.id} contact={contact}/>
-                : null
-            )}
+            <Container className='contacts-list' typeDirection='column'>
+                {filteredContacts.map(contact => contact.userName !== user.userName 
+                    ? <UserItem key={contact.id} contact={contact}/>
+                    : null
+                )}
+            </Container>
         </Container>
     )
 };

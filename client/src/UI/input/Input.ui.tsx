@@ -1,6 +1,5 @@
-import React, { ChangeEvent, FC, KeyboardEvent, memo } from 'react'
-import classes from './Input.module.css';
-
+import React, { ChangeEvent, FC, InputHTMLAttributes, KeyboardEvent, memo } from 'react'
+import './Input.css';
 
 interface InputProps {
     className?: string;
@@ -10,7 +9,6 @@ interface InputProps {
     valueSetter: (string: string) => void;
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
     onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
-    color?: 'main';
     size?: 'small' | 'medium' | 'large';
     width?: '' | 'full' | 'half';
     rounded?: '' | 'low-smooth' | 'medium-smooth' | 'strong-smooth';
@@ -24,13 +22,12 @@ const Input:FC<InputProps> = ({
     valueSetter, 
     onChange, 
     onKeyDown, 
-    color = 'main',
     size = 'medium',
     width = '',
     rounded = ''
 }) => {
 
-    const classNames = `${classes.input} ${className} ${classes[color]} ${classes[size]} ${classes[width]} ${classes[rounded]}`
+    const classNames = `input ${className} ${size} ${width} ${rounded}`
 
     const clearInput = () => {
         console.log('clearin');
@@ -38,7 +35,7 @@ const Input:FC<InputProps> = ({
     }
 
     return (
-        <div className={classes.inputContainer}>
+        <div className='input_container'>
             <input 
                 className={classNames}
                 type={type} 
@@ -47,7 +44,7 @@ const Input:FC<InputProps> = ({
                 onChange={onChange}
                 onKeyDown={onKeyDown}
             />
-            <span className={classes.inputClearBtn} onClick={clearInput}>&times;</span>
+            <span className='input_clear-btn' onClick={clearInput}>&times;</span>
         </div>
     )
 }
