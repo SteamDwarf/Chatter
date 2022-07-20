@@ -28,6 +28,8 @@ const Chat:FC<IChatProps> = () => {
     }
 
     const sendMessageHandler = () => {
+        if(!messageContent) return;
+
         const mes: IMessage = {
             id: nanoid(), 
             content: messageContent, 
