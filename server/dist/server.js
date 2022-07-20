@@ -1,19 +1,35 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SocketEvents = void 0;
+var path_1 = require("path");
 var express = require("express");
 var http = require("http");
 var cors = require("cors");
-//const { Server } = require("socket.io");
-import { Server } from "socket.io";
-var _a = require("./users"), addUser = _a.addUser, deleteUser = _a.deleteUser, getUsers = _a.getUsers, checkUniqUsername = _a.checkUniqUsername;
+var socket_io_1 = require("socket.io");
+var users_1 = require("./users");
+var uuid_1 = require("uuid");
+var messages_1 = require("./messages");
 var app = express();
 var server = http.createServer(app);
-var io = new Server(server, {
+var io = new socket_io_1.Server(server, {
     cors: {
         origin: "http://localhost:3000",
         methods: ["GET", "POST"]
     }
 });
 var PORT = 5000;
+var SocketEvents;
+(function (SocketEvents) {
+    SocketEvents["CONNECT_ERROR"] = "connect_error";
+    SocketEvents["PRIVATE_MESSAGE"] = "private_message";
+    SocketEvents["USERS"] = "users";
+    SocketEvents["GET_MESSAGES"] = "get_messages";
+})(SocketEvents = exports.SocketEvents || (exports.SocketEvents = {}));
 app.use(cors());
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path_1.default.join(__dirname, '../../client/build')));
+    app.get('*', function (req, res) { return res.sendFile(path_1.default.resolve(__dirname, '../../', 'client', 'build', 'index.html')); });
+}
 server.listen(PORT, function () {
     console.log("Server is started on http://localhost:".concat(PORT));
 });
@@ -22,38 +38,37 @@ io.use(function (socket, next) {
     if (!userName) {
         return next(new Error("Введите имя пользователя."));
     }
-    socket.handshake.auth.userName = userName;
     next();
 });
 io.on("connection", function (socket) {
-    console.log("Connected to server: ", socket.id);
-    addUser({ id: socket.id, userName: socket.handshake.auth.userName });
-    //socket.emit("users", getUsers());
-    io.emit("users", getUsers());
+    console.log("Connected to server: ", socket.handshake.auth.userName);
+    var connectingUser = (0, users_1.findUser)(socket.handshake.auth.userName);
+    if (!connectingUser) {
+        var userID = (0, uuid_1.v4)();
+        connectingUser = {
+            id: userID,
+            userName: socket.handshake.auth.userName,
+            sentNewMessage: false,
+            color: socket.handshake.auth.color,
+            isOnline: false
+        };
+        (0, users_1.addUser)(connectingUser);
+    }
+    (0, users_1.connectUser)(connectingUser);
+    socket.join(connectingUser.userName);
+    io.emit(SocketEvents.USERS, (0, users_1.getUsers)());
+    io.to(connectingUser.userName).emit('connection', connectingUser);
+    socket.on(SocketEvents.PRIVATE_MESSAGE, function (messageData) {
+        socket.to(messageData.to).emit(SocketEvents.PRIVATE_MESSAGE, messageData);
+        (0, messages_1.saveMessage)(messageData);
+    });
+    socket.on(SocketEvents.GET_MESSAGES, function (userName, contact) {
+        socket.emit(SocketEvents.GET_MESSAGES, (0, messages_1.getMessages)(userName, contact));
+    });
     socket.on("disconnect", function () {
-        console.log("Disconnected from server: ", socket.id);
-        deleteUser(socket.id);
-        socket.broadcast.emit("users", getUsers());
-    });
-    socket.on("private_message", function (_a) {
-        var message = _a.message, to = _a.to;
-        socket.to(to).emit("private_message", { message: message, from: socket.handshake.auth.userName });
-    });
-    socket.on("login", function (userName) {
-        console.log(userName, "signed in");
-    });
-    socket.on("join_room", function (userName, roomId) {
-        try {
-            addUser({ id: socket.id, name: userName }, roomId);
-            socket.join(roomId);
-            console.log(userName, "joined to room ", roomId);
-        }
-        catch (error) {
-            console.error(error);
-        }
-    });
-    socket.on("send_message", function (messageData) {
-        socket.to(messageData.room).emit("recieve_message", messageData.message);
+        console.log("Disconnected from server: ", socket.handshake.auth.userName);
+        (0, users_1.disconnectUser)(socket.handshake.auth.userName);
+        socket.broadcast.emit(SocketEvents.USERS, (0, users_1.getUsers)());
     });
 });
 //# sourceMappingURL=server.js.map

@@ -1,3 +1,4 @@
+import path from "path";
 import * as express from "express";
 import * as http from "http";
 import * as cors from "cors";
@@ -25,6 +26,12 @@ export enum SocketEvents {
 }
 
 app.use(cors());
+
+if(process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../../client/build')));
+    app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, '../../', 'client', 'build', 'index.html')));
+}
+
 server.listen(PORT, () => {
     console.log(`Server is started on http://localhost:${PORT}`);
 });
@@ -70,7 +77,6 @@ io.on("connection", (socket) => {
     });
 
     socket.on(SocketEvents.GET_MESSAGES, (userName, contact) => {
-        //socket.to(userName).emit(SocketEvents.GET_MESSAGES, getMessages(userName, contact));
         socket.emit(SocketEvents.GET_MESSAGES, getMessages(userName, contact));
     })
 
@@ -81,27 +87,4 @@ io.on("connection", (socket) => {
         socket.broadcast.emit(SocketEvents.USERS, getUsers());
     });
     
-    
-
-
-/*     socket.on("login", (userName) => {
-        console.log(userName, "signed in");
-    });
-
-    socket.on("join_room", (userName, roomId) => {
-        try {
-            addUser({id: socket.id, name: userName}, roomId);
-            socket.join(roomId);
-            console.log(userName, "joined to room ", roomId);
-        } catch (error) {
-            console.error(error);
-        }
-    }); */
-
-    
-
-    /* socket.on("send_message", (messageData) => {
-        socket.to(messageData.room).emit("recieve_message", messageData.message);
-    }); */
-
 });

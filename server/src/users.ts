@@ -9,13 +9,6 @@ export interface IUser {
 const users: Map<string, IUser> = new Map();
 
 //TODO настроить проверку уникальность имени
-/* exports.checkUniqUsername = (userName) => {
-    if(users.find((joinedUser) => joinedUser.userName === userName)) {
-        return false
-    }
-
-    return true;
-} */
 
 export const findUser = (userName: string) => {
     return users.get(userName);
