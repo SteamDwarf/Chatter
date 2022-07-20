@@ -20,7 +20,10 @@ const ContactsHeader:FC<IContactsHeaderProps> = memo(({userFilter, setUserFilter
     }
 
     const themeBtnHandler = () => {
-        setTheme(theme === THEMES.LIGHT ? THEMES.DARK : THEMES.LIGHT);
+        const newTheme = theme === THEMES.LIGHT ? THEMES.DARK : THEMES.LIGHT;
+
+        setTheme(newTheme);
+        localStorage.setItem('theme', newTheme);
     }
 
     return (

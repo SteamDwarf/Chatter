@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useEffect, useState} from "react";
+import React, {ChangeEvent, FormEvent, FormEventHandler, KeyboardEvent, useEffect, useState} from "react";
 import { useContext } from "react";
 import { connectToServer, useSocketOnError } from "../../API/sockets/sockets";
 import { IUserContext, UserContext } from "../../context/userContext.context";
@@ -28,6 +28,11 @@ const SignIn = () => {
         //localStorage.setItem("user", user);
     }
 
+    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        signIn();
+    }
+
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if(e.key === "Enter") {
             signIn();
@@ -40,7 +45,7 @@ const SignIn = () => {
 
     return (
         <Container contentPosition="center-center" height="fullHeight">
-            <div className="sign-in-form">
+            <form className="sign-in-form" onSubmit={onSubmit}>
                 <h2 className="sign-in-form_title">Добро пожаловать в Chatter</h2>
                 <Input
                     type="text" 
@@ -53,11 +58,11 @@ const SignIn = () => {
                     size="medium"
                     rounded="low-smooth"
                 />
-                <Button disabled={isLogsIn ? true : false} onClick={signIn} size='medium' rounded="low-smooth" width="full">Войти</Button>
+                <Button disabled={isLogsIn ? true : false} type='submit' size='medium' rounded="low-smooth" width="full">Войти</Button>
                 <div className="sign-in-form_message">
                     <FormMessage isLoading={isLogsIn} error={signInError}/>
                 </div>
-            </div>
+            </form>
         </Container>
     );
 }

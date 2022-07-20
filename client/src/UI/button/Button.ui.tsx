@@ -4,7 +4,8 @@ import './Button.css';
 interface IButtonProps extends HTMLAttributes<HTMLButtonElement> {
     children: ReactNode;
     className?: string;
-    onClick: () => void;
+    type?: 'button' | 'reset' | 'submit'; 
+    onClick?: () => void;
     size?: 'large' | 'medium' | 'small';
     color?: 'succes' | 'error' | 'warning' | 'main';
     variant?: 'contained' | 'outlined'; 
@@ -14,7 +15,9 @@ interface IButtonProps extends HTMLAttributes<HTMLButtonElement> {
 }
 
 const Button:FC<IButtonProps> = ({
-        children, onClick,
+        children, 
+        type = 'button',
+        onClick,
         className,
         size = 'medium', 
         color = 'main', 
@@ -35,7 +38,7 @@ const Button:FC<IButtonProps> = ({
     `    
 
     return (
-        <button disabled={disabled} className={classNames} onClick={onClick}>{children}</button>
+        <button disabled={disabled} className={classNames} type={type} onClick={onClick}>{children}</button>
     );
 }
 

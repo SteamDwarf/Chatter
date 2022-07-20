@@ -126,5 +126,13 @@ export const UserProvider: FC<{children: React.ReactNode}> = ({children}) => {
         }
     }, [userData]);
 
+    useEffect(() => {
+        const curTheme = localStorage.getItem('theme');
+
+        if(curTheme) {
+            setTheme(curTheme as THEMES);
+        }
+    }, []);
+
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 }
