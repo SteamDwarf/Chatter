@@ -1,11 +1,26 @@
 import path from "path";
-import * as express from "express";
+import e, * as express from "express";
 import * as http from "http";
 import * as cors from "cors";
 import { Server } from "socket.io";
 import { addUser, connectUser, disconnectUser, findUser, getUsers, IUser} from "./users";
 import {v4 as uuidv4} from 'uuid';
 import { getMessages, saveMessage } from "./messages";
+
+const whitelist = ['http://localhost:5000', 'http://localhost:8080', 'https://chatter-ds.herokuapp.com']
+const corsOptions = {
+    origin: (origin: any, callback: any) => {
+        console.log('Origin of request ', origin);
+        if(whitelist.indexOf(origin) !== -1 || !origin) {
+            console.log('Origin acceptable');
+            callback(null, true);
+        } else {
+            console.log('Origin rejected');
+            callback(new Error('Not allowed by CORS'));
+        }
+    }
+}
+
 
 const app = express();
 const server = http.createServer(app);
@@ -16,7 +31,8 @@ const io = new Server(server, {
     }
 });
 
-const PORT = 5000;
+
+const PORT = process.env.PORT || 5000;
 
 export enum SocketEvents {
     CONNECT_ERROR = 'connect_error',
@@ -25,11 +41,11 @@ export enum SocketEvents {
     GET_MESSAGES = 'get_messages'
 }
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 if(process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../../client/build')));
-    app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, '../../', 'client', 'build', 'index.html')));
+    app.get('*', (req, res) => res.sendFile(path.join(__dirname, '../../client/build', 'index.html')));
 }
 
 server.listen(PORT, () => {
