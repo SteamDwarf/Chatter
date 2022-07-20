@@ -7,7 +7,7 @@ import { addUser, connectUser, disconnectUser, findUser, getUsers, IUser} from "
 import {v4 as uuidv4} from 'uuid';
 import { getMessages, saveMessage } from "./messages";
 
-const whitelist = ['http://localhost:5000', 'http://localhost:8080', 'https://chatter-ds.herokuapp.com']
+/* const whitelist = ['http://localhost:5000', 'http://localhost:8080', 'https://chatter-ds.herokuapp.com']
 const corsOptions = {
     origin: (origin: any, callback: any) => {
         console.log('Origin of request ', origin);
@@ -19,7 +19,7 @@ const corsOptions = {
             callback(new Error('Not allowed by CORS'));
         }
     }
-}
+} */
 
 
 const app = express();
@@ -41,11 +41,11 @@ export enum SocketEvents {
     GET_MESSAGES = 'get_messages'
 }
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 if(process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../../client/build')));
-    app.get('*', (req, res) => res.sendFile(path.join(__dirname, '../../client/build', 'index.html')));
+    app.use(express.static(path.join(__dirname, 'client/build')));
+    app.get('*', (req, res) => res.sendFile(path.join(__dirname+'client/build/index.html')));
 }
 
 server.listen(PORT, () => {
