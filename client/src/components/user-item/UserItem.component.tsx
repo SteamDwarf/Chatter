@@ -10,7 +10,7 @@ interface IUserItemProps {
     contact: IUser;
 }
 
-const UserItem:FC<IUserItemProps> = ({contact}) => {
+const UserItem:FC<IUserItemProps> = memo(({contact}) => {
     const {user, selectedUser, setSelectedUser, updateUserNewMessageState} = useContext<IUserContext>(UserContext);
     const classNames = `user-item ${selectedUser.userName === contact.userName ? 'selected' : ''}`;
 
@@ -37,6 +37,6 @@ const UserItem:FC<IUserItemProps> = ({contact}) => {
             {contact.sentNewMessage ? <div className='user-item_notificator'>!</div> : null}
         </div>
     )
-}
+});
 
 export default memo(UserItem);

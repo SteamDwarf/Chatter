@@ -1,10 +1,10 @@
-import { useContext } from "react";
+import { memo, useContext } from "react";
 import { IUserContext, UserContext } from "../../context/userContext.context";
 import { IMessage } from "../../ts-features/interfaces";
 import RoundLabel from "../../UI/round-label/RoundLabel.component";
 import './Message.css';
 
-const Message = ({message}: {message: IMessage}) => {
+const Message = memo(({message}: {message: IMessage}) => {
     const {user, selectedUser} = useContext<IUserContext>(UserContext)
     const classNames = `message-block ${message.from === user.userName ? 'self' : 'other'}`
     const color = message.from === user.userName ? user.color : selectedUser.color;
@@ -22,6 +22,6 @@ const Message = ({message}: {message: IMessage}) => {
         </div>
         
     );
-}
+});
 
 export default Message;

@@ -14,7 +14,7 @@ interface InputProps {
     rounded?: '' | 'low-smooth' | 'medium-smooth' | 'strong-smooth';
 }
 
-const Input:FC<InputProps> = ({
+const Input:FC<InputProps> = memo(({
     className,
     type = 'text', 
     placeholder, 
@@ -47,6 +47,6 @@ const Input:FC<InputProps> = ({
             <span className='input_clear-btn' onClick={clearInput}>&times;</span>
         </div>
     )
-}
+});
 
-export default memo(Input);
+export default Input;

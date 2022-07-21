@@ -1,6 +1,7 @@
 import { DarkMode, LightMode } from "@mui/icons-material";
 import { TextField } from "@mui/material";
 import { ChangeEvent, FC, memo, useContext, useState } from "react";
+import { IThemeContext, ThemeContext } from "../../context/themeContext.context";
 import { IUserContext, UserContext } from "../../context/userContext.context";
 import { THEMES } from "../../ts-features/enums";
 import Container from "../../UI/container/Container";
@@ -13,7 +14,8 @@ interface IContactsHeaderProps {
 }
 
 const ContactsHeader:FC<IContactsHeaderProps> = memo(({userFilter, setUserFilter}) => {
-    const {user, theme, setTheme} = useContext<IUserContext>(UserContext);
+    const {user} = useContext<IUserContext>(UserContext);
+    const {theme, setTheme} = useContext<IThemeContext>(ThemeContext);
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setUserFilter(e.target.value);
@@ -50,4 +52,4 @@ const ContactsHeader:FC<IContactsHeaderProps> = memo(({userFilter, setUserFilter
     );
 });
 
-export default memo(ContactsHeader);
+export default ContactsHeader;

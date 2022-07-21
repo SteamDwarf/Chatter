@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import './FormMessage.css';
 
 interface IFormMessageProps {
@@ -6,7 +6,7 @@ interface IFormMessageProps {
     error: string;
 }
 
-const FormMessage:FC<IFormMessageProps> = ({isLoading, error}) => {
+const FormMessage:FC<IFormMessageProps> = memo(({isLoading, error}) => {
     if(isLoading) {
         return <h4 className="form-message loading-message">Подождите...</h4>
     }
@@ -16,6 +16,6 @@ const FormMessage:FC<IFormMessageProps> = ({isLoading, error}) => {
     }
 
     return <div className="form-message"></div>;
-}
+});
 
 export default FormMessage;

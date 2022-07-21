@@ -6,10 +6,10 @@ interface IRoundLabel {
     label: string;
 }
 
-const RoundLabel:FC<IRoundLabel> = ({color, label}) => {
+const RoundLabel:FC<IRoundLabel> = memo(({color, label}) => {
     return (
         <h3 className={`round-label ${color}`}>{label[0]}</h3>
     );
-}
+});
 
-export default memo(RoundLabel);
+export default RoundLabel;

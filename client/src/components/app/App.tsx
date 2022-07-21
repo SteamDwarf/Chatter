@@ -4,9 +4,11 @@ import { UserContext } from '../../context/userContext.context';
 import MainMenu from '../main-menu/MainMenu.component';
 import { IUserContext } from '../../context/userContext.context';
 import './App.css';
+import { IThemeContext, ThemeContext } from '../../context/themeContext.context';
 
 function App() {
-  const {user, theme} = useContext<IUserContext>(UserContext);
+  const {user} = useContext<IUserContext>(UserContext);
+  const {theme} = useContext<IThemeContext>(ThemeContext);
 
   return (
     <div className={`App ${theme}`}>

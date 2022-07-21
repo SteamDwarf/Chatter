@@ -4,11 +4,14 @@ import './index.css';
 import App from './components/app/App';
 import reportWebVitals from './reportWebVitals';
 import { UserProvider } from './context/userContext.context';
+import { ThemeProvider } from './context/themeContext.context';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <UserProvider>
-      <App />
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
     </UserProvider>
 );
 

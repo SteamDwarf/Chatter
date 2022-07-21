@@ -6,7 +6,7 @@ import useWindowDimension from "../../utils/hooks/useWindowDimensions";
 import { IUserContext, UserContext } from "../../context/userContext.context";
 
 
-const MainMenu = () => {
+const MainMenu = memo(() => {
     const {width} = useWindowDimension();
     const {selectedUser} = useContext<IUserContext>(UserContext);
 
@@ -32,6 +32,6 @@ const MainMenu = () => {
             <Contacts />
         </Container>
     );
-};
+});
 
-export default memo(MainMenu);
+export default MainMenu;

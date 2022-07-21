@@ -1,18 +1,22 @@
-import React, { memo, useContext, useEffect, useState } from 'react'
+import React, { memo, useContext, useEffect, useMemo, useState } from 'react'
 import { IUserContext, UserContext } from '../../context/userContext.context';
 import Container from '../../UI/container/Container';
 import ContactsHeader from '../contacts-header/ContactsHeader.component';
 import UserItem from '../user-item/UserItem.component';
 import './Contacts.css';
 
-const Contacts = () => {
+const Contacts = memo(() => {
     const {user, contacts} = useContext<IUserContext>(UserContext);
     const [filter, setFilter] = useState('');
     const [filteredContacts, setFilteredContacts] = useState(contacts);
     
-    const filteringUsers = () => {
+    const memorizedContacts = useMemo(() => {
         const filterLC = filter.toLowerCase();
-        setFilteredContacts(contacts.filter(contact => contact.userName.toLowerCase().includes(filterLC)));
+        return contacts.filter(contact => contact.userName.toLowerCase().includes(filterLC));
+    }, [contacts, filter])
+
+    const filteringUsers = () => {
+        setFilteredContacts(memorizedContacts);
     }
 
     useEffect(filteringUsers, [filter, contacts]);
@@ -28,6 +32,6 @@ const Contacts = () => {
             </Container>
         </Container>
     )
-};
+});
 
-export default memo(Contacts);
+export default Contacts;

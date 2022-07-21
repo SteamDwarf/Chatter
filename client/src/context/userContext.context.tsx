@@ -1,6 +1,5 @@
 import React, { createContext, FC, useEffect, useState } from "react";
 import { SocketEvents, useContactMessages, useRecievedMessage, useSocketOnConnect, useSocketOnEvent } from "../API/sockets/sockets";
-import { THEMES } from "../ts-features/enums";
 import { defaultUser, IMessage, IUser } from "../ts-features/interfaces";
 
 export interface IUserContext {
@@ -9,7 +8,6 @@ export interface IUserContext {
     contacts: IUser[];
     isLogsIn: boolean;
     contactMessages: IMessage[];
-    theme: THEMES;
 
     setUser: (user: IUser) => void;
     setSelectedUser: (selectedUser: IUser) => void;
@@ -17,7 +15,6 @@ export interface IUserContext {
     addMessage: (messages: IMessage) => void;
     updateUserNewMessageState: (userName: string, state: boolean) => void;
     setIsLogsIn: (state: boolean) => void;
-    setTheme: (theme: THEMES) => void;
 }
 
 
@@ -27,7 +24,6 @@ const defaultState: IUserContext = {
     contacts: [],
     isLogsIn: false,
     contactMessages: [],
-    theme: THEMES.LIGHT,
 
     setUser: (_user) => null,
     setSelectedUser: (_selectedUser) => null,
@@ -35,7 +31,6 @@ const defaultState: IUserContext = {
     addMessage: (_messages) => null,
     updateUserNewMessageState: (_userName, _state) => null,
     setIsLogsIn: (_state) => null,
-    setTheme: (_theme) => null
 }
 
 const useSortedContacts = (contacts: IUser[]): [IUser[], (contacts: IUser[]) => void] => {
@@ -68,7 +63,6 @@ export const UserProvider: FC<{children: React.ReactNode}> = ({children}) => {
     const onlineUsers = useSocketOnEvent<IUser[]>(SocketEvents.USERS, []);
     const userData = useSocketOnConnect();
     const [contactMessages, setContactMessages] = useContactMessages();
-    const [theme, setTheme] = useState<THEMES>(THEMES.LIGHT);
 
     const updateUserNewMessageState = (userName: string, state: boolean) => {
         const sender = contacts.find(contact => contact.userName === userName) as IUser;
@@ -88,7 +82,6 @@ export const UserProvider: FC<{children: React.ReactNode}> = ({children}) => {
         contacts, 
         isLogsIn,
         contactMessages,
-        theme,
 
         setUser, 
         setSelectedUser, 
@@ -96,7 +89,6 @@ export const UserProvider: FC<{children: React.ReactNode}> = ({children}) => {
         addMessage,
         updateUserNewMessageState,
         setIsLogsIn,
-        setTheme
     }
 
     useEffect(() => {
@@ -125,14 +117,6 @@ export const UserProvider: FC<{children: React.ReactNode}> = ({children}) => {
             setIsLogsIn(false);
         }
     }, [userData]);
-
-    useEffect(() => {
-        const curTheme = localStorage.getItem('theme');
-
-        if(curTheme) {
-            setTheme(curTheme as THEMES);
-        }
-    }, []);
 
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 }

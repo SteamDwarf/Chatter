@@ -11,7 +11,7 @@ export enum SocketEvents {
     GET_MESSAGES = 'get_messages'
 }
 
-const socketServerURL = 'http://localhost:5000';
+const socketServerURL = 'https://chatter-ds-server.herokuapp.com';
 let socket = io(socketServerURL, {autoConnect: false});
 
 socket.onAny((event, ...args) => {
