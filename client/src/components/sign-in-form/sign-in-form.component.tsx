@@ -1,16 +1,16 @@
-import React, {ChangeEvent, FormEvent, FormEventHandler, KeyboardEvent, useEffect, useState} from "react";
+import React, {ChangeEvent, FormEvent, KeyboardEvent, useEffect, useState} from "react";
 import { useContext } from "react";
 import { connectToServer, useSocketOnError } from "../../API/sockets/sockets";
-import { IUserContext, UserContext } from "../../context/userContext.context";
-import Button from "../../UI/button/Button.ui";
-import Container from "../../UI/container/Container";
+import { IUserContext, UserContext } from "../../context/user.context";
+import Container from "../../UI/container/container.ui";
+import Button from "../../UI/button/button.ui";
 import Input from "../../UI/input/Input.ui";
-import FormMessage from "../form-message/FormMessage.component";
-import './SignIn.css';
+import FormMessage from "./__message/sign-in-form__message.component";
+import './sign-in-form.style.css';
 
 const colors = ['red', 'green', 'purple', 'blue'];
 
-const SignIn = () => {
+const SignInForm = () => {
     const {isLogsIn, setIsLogsIn} = useContext<IUserContext>(UserContext);
     const [userName, setUserName] = useState('');
     const signInError = useSocketOnError();
@@ -46,7 +46,7 @@ const SignIn = () => {
     return (
         <Container contentPosition="center-center" height="fullHeight">
             <form className="sign-in-form" onSubmit={onSubmit}>
-                <h2 className="sign-in-form_title">Добро пожаловать в Chatter</h2>
+                <h2 className="sign-in-form__title">Добро пожаловать в Chatter</h2>
                 <Input
                     type="text" 
                     placeholder="Имя пользователя" 
@@ -67,4 +67,4 @@ const SignIn = () => {
     );
 }
 
-export default SignIn;
+export default SignInForm;

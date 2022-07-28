@@ -1,60 +1,60 @@
-.message-block {
+.chat__message {
     display: flex;
     max-width: 600px;
     margin-bottom: 10px;
 }
 
-.other.message-block {
+.chat__message-other.chat__message {
     flex-direction: row-reverse;
 }
 
-.self.message-block {
+.chat__message-self.chat__message {
     align-self: flex-end;
 }
 
-.message {
+.chat__message-content {
     min-width: 120px;
     max-width: 545px;
     padding: 10px;
     border-radius: 15px;
 }
 
-.other .message {
+.chat__message-other .chat__message-content {
     margin-left: 5px;
     margin-right: 55px;
 }
 
-.light .other .message {
+.app_theme_light .chat__message-other .chat__message-content {
     background-color: #e7d6ff;
 }
 
-.dark .other .message {
+.app_theme_dark .chat__message-other .chat__message-content {
     background-color: #392b4d;
     color: #D9D9D9;
 }
 
-.self .message {
+.chat__message-self .chat__message-content {
     margin-right: 5px;
     margin-left: 55px;
 }
 
-.light .self .message {
+.app_theme_light .chat__message-self  .chat__message-content {
     background-color: #cfe4ff;
 }
 
-.dark .self .message {
+.app_theme_dark .chat__message-self .chat__message-content {
     background-color: #284d7d;
     color: #D9D9D9;
 }
 
-.message_text {
+.chat__message-text {
     font-size: 16px;
     padding: 10px 0px;
     white-space: pre-wrap;
 }
 
 
-.message_date {
+.chat__message-date {
     padding-top: 5px;
     text-align: right;
     font-size: 12px;

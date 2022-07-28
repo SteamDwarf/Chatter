@@ -13,6 +13,7 @@ export interface IUserContext {
     setSelectedUser: (selectedUser: IUser) => void;
     setContacts: (contacts: IUser[]) => void;
     addMessage: (messages: IMessage) => void;
+    clearMessages: () => void;
     updateUserNewMessageState: (userName: string, state: boolean) => void;
     setIsLogsIn: (state: boolean) => void;
 }
@@ -29,6 +30,7 @@ const defaultState: IUserContext = {
     setSelectedUser: (_selectedUser) => null,
     setContacts: (_contacts) => null,
     addMessage: (_messages) => null,
+    clearMessages: () => null,
     updateUserNewMessageState: (_userName, _state) => null,
     setIsLogsIn: (_state) => null,
 }
@@ -76,6 +78,10 @@ export const UserProvider: FC<{children: React.ReactNode}> = ({children}) => {
         setContactMessages([...contactMessages, message]);
     }
 
+    const clearMessages = () => {
+        setContactMessages([]);
+    }
+
     const value: IUserContext = {
         user, 
         selectedUser, 
@@ -87,6 +93,7 @@ export const UserProvider: FC<{children: React.ReactNode}> = ({children}) => {
         setSelectedUser, 
         setContacts,
         addMessage,
+        clearMessages,
         updateUserNewMessageState,
         setIsLogsIn,
     }

@@ -2,3 +2,129 @@
     display: flex;
     padding: 5px;
 }
+
+.column {
+    flex-direction: column;
+}
+
+.row {
+    flex-direction: row;
+}
+
+.center-center {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.left-center.row {
+    justify-content: flex-start;
+    align-items: center;
+}
+.left-center.column {
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.right-center.row {
+    justify-content: flex-end;
+    align-items: center;
+}
+.right-center.column {
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.center-top.row{
+    justify-content: center;
+    align-items: flex-start;
+}
+.center-top.column {
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.left-bottom.row {
+    justify-content: center;
+    align-items: flex-end;
+}
+.left-bottom.column {
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.left-top.row {
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.left-top.column {
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.right-top.row {
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+.right-top.column {
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+
+.left-bottom.row {
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+.left-bottom.column {
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+
+.right-bottom {
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.space-around {
+    justify-content: space-around !important;
+}
+
+.space-between {
+    justify-content: space-between !important;
+}
+
+.center {
+    justify-content: center !important;
+}
+
+
+.fullHeight {
+    height: 100%;
+}
+
+.halfHeight {
+    height: 50%;
+}
+
+.quartHeight {
+    height: 25%;
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+.halfWidth {
+    width: 50%;
+}
+
+.quartWidth {
+    width: 25%;
+}
+
+.volume {
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}

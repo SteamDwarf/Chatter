@@ -1,37 +1,37 @@
-.contacts-block {
+.contacts {
     width: 30%;
     height: 100%;
     padding-right: 5px;
     border-right: 2px solid #1976d2;
 }
 
-.contacts-list {
+.contacts__list {
     height: 100%;
     overflow-y: auto;
 }
 
-.contacts-list::-webkit-scrollbar {
+.contacts__list::-webkit-scrollbar {
     width: 10px;
 }
 
-.light .contacts-list::-webkit-scrollbar-track {
+.app_theme_light .contacts__list::-webkit-scrollbar-track {
     border-radius: 10px;
     background-color: #d8d8d8;
 }
 
 
-.dark .contacts-list::-webkit-scrollbar-track {
+.app_theme_dark .contacts__list::-webkit-scrollbar-track {
     border-radius: 10px;
     background-color: #2A3C4B;
 }
 
-.contacts-list::-webkit-scrollbar-thumb {
+.contacts__list::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: #1976d2;
 }
 
 @media (max-width: 750px) {
-    .contacts-block {
+    .contacts {
         width: 100%;
         max-width: 100%;
         border: none;

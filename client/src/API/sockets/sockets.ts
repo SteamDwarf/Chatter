@@ -14,10 +14,6 @@ export enum SocketEvents {
 const socketServerURL = 'https://chatter-ds-server.herokuapp.com';
 let socket = io(socketServerURL, {autoConnect: false});
 
-socket.onAny((event, ...args) => {
-    console.log(event, args);
-});
-
 export const connectToServer = (userName: string, color: string) => {
     socket.auth = {userName, color};
     socket.connect();

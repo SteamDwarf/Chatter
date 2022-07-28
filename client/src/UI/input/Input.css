@@ -1,4 +1,4 @@
-.input_container {
+.input__wrapper {
     position: relative;
     width: 100%;
 }
@@ -8,11 +8,11 @@
     outline: none;
 }
 
-.light .input {
+.app_theme_light .input {
     border-color: #1976d2;
 }
 
-.dark .input {
+.app_theme_dark .input {
     background-color: #2A3C4B;
     border: none;
     color: #D9D9D9; 
@@ -76,33 +76,33 @@
     border-radius: 24px
 }
 
-.input_clear-btn {
+.input__clear-btn {
     position: absolute;
     cursor: pointer;
     opacity: 0;
 }
 
-.dark .input_clear-btn{
+.app_theme_dark .input__clear-btn{
     color:#D9D9D9;
 }
 
-.input:focus + .input_clear-btn {
+.input:focus + .input__clear-btn {
     opacity: 1;
 }
 
-.small + .input_clear-btn {
+.small + .input__clear-btn {
     right: 1%;
     top: 7%;
     font-size: 20px;
 }
 
-.medium + .input_clear-btn {
+.medium + .input__clear-btn {
     right: 1%;
     top: 13%;
     font-size: 25px;
 }
 
-.large + .input_clear-btn {
+.large + .input__clear-btn {
     right: 1%;
     top: 20%;
     font-size: 30px;

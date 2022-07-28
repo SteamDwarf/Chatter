@@ -30,12 +30,11 @@ const Input:FC<InputProps> = memo(({
     const classNames = `input ${className} ${size} ${width} ${rounded}`
 
     const clearInput = () => {
-        console.log('clearin');
         valueSetter('');
     }
 
     return (
-        <div className='input_container'>
+        <div className='input__wrapper'>
             <input 
                 className={classNames}
                 type={type} 
@@ -44,7 +43,7 @@ const Input:FC<InputProps> = memo(({
                 onChange={onChange}
                 onKeyDown={onKeyDown}
             />
-            <span className='input_clear-btn' onClick={clearInput}>&times;</span>
+            <span className='input__clear-btn' onClick={clearInput}>&times;</span>
         </div>
     )
 });

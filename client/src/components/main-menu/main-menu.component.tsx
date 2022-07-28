@@ -1,9 +1,9 @@
-import { Fragment, memo, useContext } from "react";
-import Contacts from '../contacts/Contacts.component';
-import Container from "../../UI/container/Container";
-import Chat from "../chat/Chat.component";
+import { memo, useContext } from "react";
+import Contacts from '../contacts/contacts.component';
+import Container from "../../UI/container/container.ui";
+import Chat from "../chat/chat.component";
 import useWindowDimension from "../../utils/hooks/useWindowDimensions";
-import { IUserContext, UserContext } from "../../context/userContext.context";
+import { IUserContext, UserContext } from "../../context/user.context";
 
 
 const MainMenu = memo(() => {

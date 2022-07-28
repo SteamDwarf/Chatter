@@ -1,25 +1,25 @@
-.App {
+.app {
     width: 100%;
     height: 100vh;
 }
 
-.light.App {
+.app_theme_light.app {
     background-color: #e6e6e6;
 }
 
-.dark.App {
+.app_theme_dark.app {
     background-color: #172027;
 }
 
-.app_container {
+.app__container {
     max-width: 1200px;
     height: 100vh;
     margin: 0 auto;
 }
 
-.light .app_container {
+.app_theme_light .app__container {
     background-color: #fff;
 }
-.dark .app_container {
+.app_theme_dark .app__container {
     background-color: #132331;
 }

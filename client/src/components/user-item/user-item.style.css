@@ -10,49 +10,49 @@
     cursor: pointer;
 }
 
-.dark .user-item {
+.app_theme_dark .user-item {
     color: #D9D9D9;
 }
 
-.user-item_data {
+.user-item__data {
     width: 90%;
     display: flex;
     align-items: center;
 }
 
-.light .user-item:hover {
+.app_theme_light .user-item:hover {
     background-color: rgb(207, 228, 255);
 }
 
-.dark .user-item:hover {
+.app_theme_dark .user-item:hover {
     background-color: #2A3C4B;
 }
 
-.light .user-item.selected {
+.app_theme_light .user-item.selected {
     background-color: rgb(207, 228, 255);
 }
 
-.dark .user-item.selected {
+.app_theme_dark .user-item.selected {
     background-color: #2A3C4B;
 }
 
-.user-item_info {
+.user-item__info {
     max-width: 80%;
     margin-left: 15px;
 }
 
-.user-item_name {
+.user-item__name {
     
     overflow: hidden;
     text-overflow: ellipsis;
 }
     
 
-.user-item_online-status {
+.user-item__online-status {
     font-size: 14px;
 }
 
-.online-status_lamp {
+.user-item__online-status-lamp {
     display: inline-block;
     width: 10px;
     height: 10px;
@@ -60,15 +60,15 @@
     border-radius: 50%;
 }
 
-.online-status_lamp.online {
+.user-item__online-status-lamp.online {
     background-color: green;
 }
 
-.online-status_lamp.offline {
+.user-item__online-status-lamp.offline {
     background-color: rgb(253, 57, 57);
 }
 
-.user-item_notificator {
+.user-item__notificator {
     width: 20px;
     height: 20px;
     min-width: 20px;

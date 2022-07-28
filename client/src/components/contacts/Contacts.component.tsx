@@ -1,9 +1,9 @@
 import React, { memo, useContext, useEffect, useMemo, useState } from 'react'
-import { IUserContext, UserContext } from '../../context/userContext.context';
-import Container from '../../UI/container/Container';
-import ContactsHeader from '../contacts-header/ContactsHeader.component';
-import UserItem from '../user-item/UserItem.component';
-import './Contacts.css';
+import { IUserContext, UserContext } from '../../context/user.context';
+import Container from '../../UI/container/container.ui';
+import ContactsHeader from './__header/contacts__header.component';
+import UserItem from '../user-item/user-item.component';
+import './contacts.style.css';
 
 const Contacts = memo(() => {
     const {user, contacts} = useContext<IUserContext>(UserContext);
@@ -22,9 +22,9 @@ const Contacts = memo(() => {
     useEffect(filteringUsers, [filter, contacts]);
 
     return (
-        <Container className='contacts-block' typeDirection='column'>
+        <Container className='contacts' typeDirection='column'>
             <ContactsHeader userFilter={filter} setUserFilter={setFilter}/>
-            <Container className='contacts-list' typeDirection='column'>
+            <Container className='contacts__list' typeDirection='column'>
                 {filteredContacts.map(contact => contact.userName !== user.userName 
                     ? <UserItem key={contact.id} contact={contact}/>
                     : null

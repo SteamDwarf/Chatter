@@ -1,12 +1,11 @@
 import { DarkMode, LightMode } from "@mui/icons-material";
-import { TextField } from "@mui/material";
-import { ChangeEvent, FC, memo, useContext, useState } from "react";
-import { IThemeContext, ThemeContext } from "../../context/themeContext.context";
-import { IUserContext, UserContext } from "../../context/userContext.context";
-import { THEMES } from "../../ts-features/enums";
-import Container from "../../UI/container/Container";
-import Input from "../../UI/input/Input.ui";
-import './ContactsHeader.css';
+import { ChangeEvent, FC, memo, useContext } from "react";
+import { IThemeContext, ThemeContext } from "../../../context/theme.context";
+import { IUserContext, UserContext } from "../../../context/user.context";
+import { THEMES } from "../../../ts-features/enums";
+import Container from "../../../UI/container/container.ui";
+import Input from "../../../UI/input/Input.ui";
+import './contacts__header.style.css';
 
 interface IContactsHeaderProps {
     userFilter: string;
@@ -29,9 +28,9 @@ const ContactsHeader:FC<IContactsHeaderProps> = memo(({userFilter, setUserFilter
     }
 
     return (
-        <Container className='contact_header' typeDirection="column">
-            <div className='contact_header_user-data'>
-                <h4 className='contact_header_user-name'>{user.userName}</h4>
+        <Container className='contact__header' typeDirection="column">
+            <div className='contact__header-user-data'>
+                <h4 className='contact__header-username'>{user.userName}</h4>
                 {
                     theme === THEMES.LIGHT
                     ? <LightMode color="warning" fontSize="large" className='theme-btn' onClick={themeBtnHandler}/>

@@ -3,7 +3,7 @@
     padding-bottom: 0px;
 }
 
-.chat_header {
+.chat__header {
     display: none;
     justify-content: space-between;
     align-items: center;
@@ -16,32 +16,32 @@
     border-bottom: 2px solid #1976d2;
 }
 
-.light .chat_header{
+.app_theme_light .chat__header{
     background-color: #fff;
 }
 
-.dark .chat_header {
+.app_theme_dark .chat__header {
     background-color: #132331;
     color: #D9D9D9
 }
 
-.chat_back-btn {
+.chat__back-btn {
     width: 30px;
     height: 30px;
     cursor: pointer;
     transition: transform 0.3s;
 }
 
-.chat_back-btn:hover {
+.chat__back-btn:hover {
     transform: scale(1.1);
 }
 
-.chat_header_selected-user_after {
+.chat__header-selected-user-after {
     width: 30px;
     height: 30px;
 }
 
-.chat_messages-container {
+.chat__messages-container {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -51,26 +51,26 @@
     overflow-y: auto;
 }
 
-.chat_messages-container::-webkit-scrollbar {
+.chat__messages-container::-webkit-scrollbar {
     width: 10px;
 }
 
-.light .chat_messages-container::-webkit-scrollbar-track {
+.app_theme_light .chat__messages-container::-webkit-scrollbar-track {
     border-radius: 10px;
     background-color: #d8d8d8;
 }
 
-.dark .chat_messages-container::-webkit-scrollbar-track {
+.app_theme_dark .chat__messages-container::-webkit-scrollbar-track {
     border-radius: 10px;
     background-color: #2A3C4B;
 }
 
-.chat_messages-container::-webkit-scrollbar-thumb {
+.chat__messages-container::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: #1976d2;
 }
 
-.chat_input {
+.chat__input-block {
     position: relative;
     display: flex;
     align-items: flex-start;
@@ -78,7 +78,7 @@
     padding-top: 5px;
 }
 
-.chat_send-btn {
+.chat__send-btn {
     position: absolute;
     bottom: 0%;
     display: flex;
@@ -91,15 +91,15 @@
     transition: background-color 0.3s;
 }
 
-.light .chat_send-btn_svg {
+.app_theme_light .chat__send-btn-svg {
     fill:#1976d2;
 }
 
-.dark .chat_send-btn_svg {
+.app_theme_dark .chat__send-btn-svg {
     fill: #64b0fb
 }
 
-.chat_message-text-area {
+.chat__message-textarea {
     width: 100%;
     padding: 10px;
     padding-left: 45px;
@@ -110,7 +110,7 @@
     outline: none;
 }
 
-.dark .chat_message-text-area {
+.app_theme_dark .chat__message-textarea {
     background-color: #2A3C4B;
     color: #D9D9D9;
 }
@@ -118,7 +118,7 @@
 
 
 @media (max-width: 1400px) {
-    .chat_messages-container {
+    .chat__messages-container {
         width: 100%;
         margin-left: 0;
         padding-right: 5px;
@@ -130,10 +130,10 @@
     .chat {
         width: 100%;
     }
-    .chat_header {
+    .chat__header {
         display: flex;
     }
-    .chat_messages-container {
-        margin-top: 50px;
+    .chat__messages-container {
+        margin-top: 41px;
     }
 }

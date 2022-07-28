@@ -1,10 +1,10 @@
 import React, { FC, memo} from 'react'
 import { useContext } from 'react'
 import { socketGetContactMessages } from '../../API/sockets/sockets';
-import { IUserContext, UserContext } from '../../context/userContext.context'
+import { IUserContext, UserContext } from '../../context/user.context'
 import { IUser } from '../../ts-features/interfaces';
-import RoundLabel from '../../UI/round-label/RoundLabel.component';
-import './UserItem.css';
+import RoundedLabel from '../../UI/rounded-label/rounded-label.component';
+import './user-item.style.css';
 
 interface IUserItemProps {
     contact: IUser;
@@ -23,18 +23,18 @@ const UserItem:FC<IUserItemProps> = memo(({contact}) => {
 
     return (
         <div className={classNames} onClick={onClickHandler}>
-            <div className='user-item_data'>
-                <RoundLabel color={contact.color} label={contact.userName}/> 
-                <div className='user-item_info'>
-                    <h5 className='user-item_name'>{contact.userName}</h5>
-                    <p className='user-item_online-status'>
-                        <span className={`online-status_lamp ${contact.isOnline ? 'online' : 'offline'}`}></span>
+            <div className='user-item__data'>
+                <RoundedLabel color={contact.color} label={contact.userName}/> 
+                <div className='user-item__info'>
+                    <h5 className='user-item__name'>{contact.userName}</h5>
+                    <p className='user-item__online-status'>
+                        <span className={`user-item__online-status-lamp ${contact.isOnline ? 'online' : 'offline'}`}></span>
                         <span>{contact.isOnline ? 'online' : 'offline'}</span>
                     </p>
                 </div>
                 
             </div>
-            {contact.sentNewMessage ? <div className='user-item_notificator'>!</div> : null}
+            {contact.sentNewMessage ? <div className='user-item__notificator'>!</div> : null}
         </div>
     )
 });

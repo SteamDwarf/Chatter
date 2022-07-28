@@ -1,5 +1,5 @@
 import { FC, memo } from "react";
-import './FormMessage.css';
+import './sign-in-form__message.style.css';
 
 interface IFormMessageProps {
     isLoading: boolean;
@@ -8,14 +8,14 @@ interface IFormMessageProps {
 
 const FormMessage:FC<IFormMessageProps> = memo(({isLoading, error}) => {
     if(isLoading) {
-        return <h4 className="form-message loading-message">Подождите...</h4>
+        return <h4 className="sign-in-form__message loading-message">Подождите...</h4>
     }
 
     if(error) {
-        return <h4 className="form-message error-message">{error}</h4>
+        return <h4 className="sign-in-form__message error-message">{error}</h4>
     }
 
-    return <div className="form-message"></div>;
+    return <div className="sign-in-form__message"></div>;
 });
 
 export default FormMessage;

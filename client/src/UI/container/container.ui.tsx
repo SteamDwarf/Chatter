@@ -1,7 +1,5 @@
 import React, { FC, ReactNode } from 'react'
-
-import classes from './Container.module.css';
-import './Container.style.css';
+import './container.style.css';
 
 type ContentPostion = 'center-center' | 'left-center' | 'right-center' | 'center-top' | 'center-bottom'
                         | 'left-top' | 'right-top' | 'left-bottom' | 'right-bottom';
@@ -22,7 +20,7 @@ const Container:FC<IContainerProps> = ({
     children,
     className,
     contentPosition = 'left-top',
-    contentRarity,
+    contentRarity = '',
     typeDirection = "row", 
     height = '',
     width = 'fullWidth',
@@ -32,12 +30,12 @@ const Container:FC<IContainerProps> = ({
     const classNames = `
         container
         ${className}  
-        ${classes[contentPosition]} 
-        ${classes[typeDirection]} 
-        ${height ? classes[height] : ''}
-        ${contentRarity ? classes[contentRarity] : ''}
-        ${classes[width]}
-        ${shadow ? classes[shadow] : ''}
+        ${contentPosition} 
+        ${typeDirection} 
+        ${height}
+        ${contentRarity}
+        ${width}
+        ${shadow}
     `
 
     return (

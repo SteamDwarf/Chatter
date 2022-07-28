@@ -9,20 +9,20 @@
     border: 2px solid #3B6EF7;
 }
 
-.dark .sign-in-form_title {
+.app_theme_dark .sign-in-form__title {
     color: #fff;
 }
 
 
 @media (max-width: 500px) {
-    .sign-in-form_title {
+    .sign-in-form__title {
         font-size: 30px;
     }
 }
 
 
 @media (max-width: 360px) {
-    .sign-in-form_title {
+    .sign-in-form__title {
         font-size: 25px;
     }
 }

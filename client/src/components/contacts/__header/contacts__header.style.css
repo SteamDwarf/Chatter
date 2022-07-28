@@ -1,9 +1,9 @@
 
-.contact_header {
+.contact__header {
     margin-bottom: 15px;
 }
 
-.contact_header_user-data {
+.contact__header-user-data {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -11,12 +11,12 @@
     margin-bottom: 15px;
 }
 
-.contact_header_user-name {
+.contact__header-username {
     margin-right: 5px;
     overflow: hidden;
 }
 
-.dark .contact_header_user-name {
+.app_theme_dark .contact__header-username {
     color: #D9D9D9;
 }
 
