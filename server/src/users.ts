@@ -22,14 +22,14 @@ export const connectUser = (user: IUser) => {
     const existedUser = users.get(user.userName);
     existedUser ? existedUser.isOnline = true : null;
 
-    console.table(users);
+    //console.table(users);
 }
 
 export const disconnectUser = (userName: string) => {
     const existedUser = users.get(userName);
     existedUser ? existedUser.isOnline = false : null; 
     
-    console.table(users);
+    //console.table(users);
 }
 
 /* 

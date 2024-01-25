@@ -7,7 +7,11 @@ import { addUser, connectUser, disconnectUser, findUser, getUsers, IUser} from "
 import {v4 as uuidv4} from 'uuid';
 import { getMessages, saveMessage } from "./messages";
 
-/* const whitelist = ['http://localhost:5000', 'http://localhost:8080', 'https://chatter-ds.herokuapp.com']
+const whitelist = [
+    'http://localhost:5000', 
+    'http://localhost:8080', 
+    'https://steamdwarf.github.io/Chatter-frontend'
+]
 const corsOptions = {
     origin: (origin: any, callback: any) => {
         console.log('Origin of request ', origin);
@@ -19,14 +23,14 @@ const corsOptions = {
             callback(new Error('Not allowed by CORS'));
         }
     }
-} */
+}
 
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: "*",
+        origin: "https://steamdwarf.github.io/Chatter-frontend",
         methods: ["GET", "POST"]
     }
 });
@@ -41,7 +45,7 @@ export enum SocketEvents {
     GET_MESSAGES = 'get_messages'
 }
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 if(process.env.NODE_ENV === 'production') {
     //app.use(express.static(path.join(__dirname, 'client/build')));
