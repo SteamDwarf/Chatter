@@ -45,7 +45,7 @@ export enum SocketEvents {
     GET_MESSAGES = 'get_messages'
 }
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 if(process.env.NODE_ENV === 'production') {
     //app.use(express.static(path.join(__dirname, 'client/build')));
