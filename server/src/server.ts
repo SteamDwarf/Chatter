@@ -31,9 +31,9 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: "https://steamdwarf.github.io/Chatter-frontend/",
-        credentials: true
-    },
+        origin: '*',
+        methods: ["GET", "POST"]
+    }
 });
 
 
