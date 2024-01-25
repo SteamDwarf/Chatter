@@ -7,9 +7,10 @@ import { addUser, connectUser, disconnectUser, findUser, getUsers, IUser} from "
 import {v4 as uuidv4} from 'uuid';
 import { getMessages, saveMessage } from "./messages";
 
-const whitelist = [
+/* const whitelist = [
     'http://localhost:5000', 
-    'http://localhost:8080', 
+    'http://localhost:8080',
+    'http://localhost:10000', 
     'https://steamdwarf.github.io/Chatter-frontend'
 ]
 const corsOptions = {
@@ -23,16 +24,15 @@ const corsOptions = {
             callback(new Error('Not allowed by CORS'));
         }
     }
-}
+} */
 
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: "https://steamdwarf.github.io/Chatter-frontend",
-        methods: ["GET", "POST"]
-    }
+        origin: ["*"],
+    },
 });
 
 
