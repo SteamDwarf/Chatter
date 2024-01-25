@@ -12,7 +12,8 @@ export enum SocketEvents {
 }
 
 /* const socketServerURL = 'https://chatter-ds-server.herokuapp.com'; */
-const socketServerURL = 'http://localhost:5000';
+//const socketServerURL = 'http://localhost:5000';
+const socketServerURL = 'https://chatter-u930.onrender.com';
 let socket = io(socketServerURL, {autoConnect: false});
 
 export const connectToServer = (userName: string, color: string) => {
