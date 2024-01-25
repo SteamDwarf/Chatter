@@ -11,7 +11,8 @@ export enum SocketEvents {
     GET_MESSAGES = 'get_messages'
 }
 
-const socketServerURL = 'https://chatter-ds-server.herokuapp.com';
+/* const socketServerURL = 'https://chatter-ds-server.herokuapp.com'; */
+const socketServerURL = 'http://localhost:5000';
 let socket = io(socketServerURL, {autoConnect: false});
 
 export const connectToServer = (userName: string, color: string) => {
@@ -46,7 +47,7 @@ export const useSocketOnError = () => {
 export const useSocketOnEvent = <T>(event: SocketEvents, initState: T) => {
     const [data, setData] = useState(initState);
 
-    socket.on(event, (recievedData) => {
+    socket.on(event, (recievedData: any) => {
         setData(recievedData);
     })
 

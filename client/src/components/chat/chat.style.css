@@ -78,15 +78,25 @@
     padding-top: 5px;
 }
 
-.chat__send-btn {
+.chat__buttons {
     position: absolute;
     bottom: 0%;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 45px;
+}
+
+.chat__btn {
+    /* position: absolute;
+    bottom: 0%;
+    display: flex;
+    align-items: center;
+    justify-content: center; */
+    width: 30px;
     height: 42px;
+    border: none;
     text-align: center;
+    background-color: transparent;
     cursor: pointer;
     transition: background-color 0.3s;
 }
@@ -102,12 +112,20 @@
 .chat__message-textarea {
     width: 100%;
     padding: 10px;
-    padding-left: 45px;
+    padding-left: 60px;
     border: 2px solid #1976d2;
     border-radius: 10px;
     font-size: 16px;
     resize: none;
     outline: none;
+}
+
+.chat__upload-input {
+    display: none;
+}
+
+.chat__btn_type_upload {
+    padding-top: 10%;
 }
 
 .app_theme_dark .chat__message-textarea {

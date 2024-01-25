@@ -4,6 +4,7 @@ export interface IMessage {
     date: string;
     from: string;
     to: string;
+    files: File[]
 }
 
 export interface IUser {

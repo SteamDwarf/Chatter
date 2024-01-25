@@ -8,6 +8,7 @@ import { nanoid } from "nanoid";
 import Message from "./__message/message.component";
 import { TextareaAutosize } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
+import AttachFile from "@mui/icons-material/AttachFile";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import './chat.style.css';
 
@@ -17,6 +18,7 @@ interface IChatProps {
 const Chat:FC<IChatProps> = () => {
     const {user, selectedUser, setSelectedUser, addMessage, contactMessages, clearMessages} = useContext<IUserContext>(UserContext);
     const [messageContent, setMessageContent] = useState('');
+    const [attachedFiles, setAttachedFiles] = useState<File []>([]);
     const chatEndpoint = useRef<HTMLDivElement>(null);
 
     const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -36,7 +38,8 @@ const Chat:FC<IChatProps> = () => {
             content: messageContent, 
             to: selectedUser.userName, 
             from: user.userName,  
-            date: `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`
+            date: `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`,
+            files: attachedFiles
         }
 
         socketSendPrivateMessage(mes);
@@ -44,9 +47,14 @@ const Chat:FC<IChatProps> = () => {
         setMessageContent('');
     }
 
+    const attachFiles = (e: ChangeEvent<HTMLInputElement>) => {
+        setAttachedFiles(Array.prototype.slice.call(e.target.files));
+    }
+
     const scrollToBottom = () => {
         chatEndpoint.current?.scrollIntoView();
     }
+
 
     const keyPressHandler = (e: KeyboardEvent<HTMLTextAreaElement>) => {        
         if(e.key === "Enter" && !e.shiftKey) {
@@ -75,9 +83,16 @@ const Chat:FC<IChatProps> = () => {
                     <div ref={chatEndpoint}></div>
                 </div>
                 <div className='chat__input-block'>
-                    <div onClick={sendMessageHandler} className='chat__send-btn'>
-                        <SendIcon className="chat__send-btn-svg"/>
+                    <div className="chat__buttons">
+                        <input className="chat__upload-input" type="file" id="upload" multiple={true} onChange={attachFiles}/>
+                        <label htmlFor="upload" className='chat__btn chat__btn_type_upload'>
+                            <AttachFile className="chat__send-btn-svg"/>
+                        </label>
+                        <button onClick={sendMessageHandler} className='chat__btn'>
+                            <SendIcon className="chat__send-btn-svg"/>
+                        </button>
                     </div>
+                    
                     <TextareaAutosize 
                         value={messageContent} 
                         onChange={onChangeHandler}
