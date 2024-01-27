@@ -14,13 +14,13 @@ exports.addUser = addUser;
 var connectUser = function (user) {
     var existedUser = users.get(user.userName);
     existedUser ? existedUser.isOnline = true : null;
-    console.table(users);
+    //console.table(users);
 };
 exports.connectUser = connectUser;
 var disconnectUser = function (userName) {
     var existedUser = users.get(userName);
     existedUser ? existedUser.isOnline = false : null;
-    console.table(users);
+    //console.table(users);
 };
 exports.disconnectUser = disconnectUser;
 /*

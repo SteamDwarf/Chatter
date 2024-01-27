@@ -1,11 +1,14 @@
-import path from "path";
-import e, * as express from "express";
+import * as express from "express";
 import * as http from "http";
 import * as cors from "cors";
 import { Server } from "socket.io";
 import { addUser, connectUser, disconnectUser, findUser, getUsers, IUser} from "./users";
 import {v4 as uuidv4} from 'uuid';
 import { getMessages, saveMessage } from "./messages";
+import { SocketEvents } from "./enums";
+import * as path from "path";
+
+const dotenv = require('dotenv').config();
 
 /* const whitelist = [
     'http://localhost:5000', 
@@ -27,6 +30,8 @@ const corsOptions = {
 } */
 
 
+const PORT = process.env.PORT || 5000;
+
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -37,25 +42,18 @@ const io = new Server(server, {
 });
 
 
-const PORT = process.env.PORT || 5000;
-
-export enum SocketEvents {
-    CONNECT_ERROR = 'connect_error',
-    PRIVATE_MESSAGE = 'private_message',
-    USERS = 'users',
-    GET_MESSAGES = 'get_messages'
-}
-
+/* if(process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.resolve(__dirname, 'client/build')));
+} */
 app.use(cors());
+app.use(express.static(path.resolve(__dirname, '../../client/build')))
 
-if(process.env.NODE_ENV === 'production') {
-    //app.use(express.static(path.join(__dirname, 'client/build')));
-    app.get('*', (req, res) => res.json({message: "Chatter work!"}));
-}
+app.get('/', (req, res) => res.sendFile(path.resolve(__dirname, '../../client/build/index.html')));
 
 server.listen(PORT, () => {
     console.log(`Server is started on http://localhost:${PORT}`);
-});
+})
+
 
 io.use((socket, next) => {
     const userName = socket.handshake.auth.userName;

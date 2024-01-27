@@ -1,7 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SocketEvents = void 0;
-var path_1 = require("path");
 var express = require("express");
 var http = require("http");
 var cors = require("cors");
@@ -9,7 +7,15 @@ var socket_io_1 = require("socket.io");
 var users_1 = require("./users");
 var uuid_1 = require("uuid");
 var messages_1 = require("./messages");
-/* const whitelist = ['http://localhost:5000', 'http://localhost:8080', 'https://chatter-ds.herokuapp.com']
+var enums_1 = require("./enums");
+var path = require("path");
+var dotenv = require('dotenv').config();
+/* const whitelist = [
+    'http://localhost:5000',
+    'http://localhost:8080',
+    'http://localhost:10000',
+    'https://steamdwarf.github.io/Chatter-frontend'
+]
 const corsOptions = {
     origin: (origin: any, callback: any) => {
         console.log('Origin of request ', origin);
@@ -22,27 +28,21 @@ const corsOptions = {
         }
     }
 } */
+var PORT = process.env.PORT || 5000;
 var app = express();
 var server = http.createServer(app);
 var io = new socket_io_1.Server(server, {
     cors: {
-        origin: "http://localhost:3000",
+        origin: '*',
         methods: ["GET", "POST"]
     }
 });
-var PORT = process.env.PORT || 5000;
-var SocketEvents;
-(function (SocketEvents) {
-    SocketEvents["CONNECT_ERROR"] = "connect_error";
-    SocketEvents["PRIVATE_MESSAGE"] = "private_message";
-    SocketEvents["USERS"] = "users";
-    SocketEvents["GET_MESSAGES"] = "get_messages";
-})(SocketEvents = exports.SocketEvents || (exports.SocketEvents = {}));
+/* if(process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.resolve(__dirname, 'client/build')));
+} */
 app.use(cors());
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path_1.default.join(__dirname, 'client/build')));
-    app.get('*', function (req, res) { return res.sendFile(path_1.default.join(__dirname + 'client/build/index.html')); });
-}
+app.use(express.static(path.resolve(__dirname, '../../client/build')));
+app.get('/', function (req, res) { return res.sendFile(path.resolve(__dirname, '../../client/build/index.html')); });
 server.listen(PORT, function () {
     console.log("Server is started on http://localhost:".concat(PORT));
 });
@@ -69,19 +69,19 @@ io.on("connection", function (socket) {
     }
     (0, users_1.connectUser)(connectingUser);
     socket.join(connectingUser.userName);
-    io.emit(SocketEvents.USERS, (0, users_1.getUsers)());
+    io.emit(enums_1.SocketEvents.USERS, (0, users_1.getUsers)());
     io.to(connectingUser.userName).emit('connection', connectingUser);
-    socket.on(SocketEvents.PRIVATE_MESSAGE, function (messageData) {
-        socket.to(messageData.to).emit(SocketEvents.PRIVATE_MESSAGE, messageData);
+    socket.on(enums_1.SocketEvents.PRIVATE_MESSAGE, function (messageData) {
+        socket.to(messageData.to).emit(enums_1.SocketEvents.PRIVATE_MESSAGE, messageData);
         (0, messages_1.saveMessage)(messageData);
     });
-    socket.on(SocketEvents.GET_MESSAGES, function (userName, contact) {
-        socket.emit(SocketEvents.GET_MESSAGES, (0, messages_1.getMessages)(userName, contact));
+    socket.on(enums_1.SocketEvents.GET_MESSAGES, function (userName, contact) {
+        socket.emit(enums_1.SocketEvents.GET_MESSAGES, (0, messages_1.getMessages)(userName, contact));
     });
     socket.on("disconnect", function () {
         console.log("Disconnected from server: ", socket.handshake.auth.userName);
         (0, users_1.disconnectUser)(socket.handshake.auth.userName);
-        socket.broadcast.emit(SocketEvents.USERS, (0, users_1.getUsers)());
+        socket.broadcast.emit(enums_1.SocketEvents.USERS, (0, users_1.getUsers)());
     });
 });
 //# sourceMappingURL=server.js.map

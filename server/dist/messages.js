@@ -10,6 +10,7 @@ exports.getMessages = getMessages;
 var saveMessage = function (message) {
     addMessage(message.from, message.to, message);
     addMessage(message.to, message.from, message);
+    saveFiles(message.files);
 };
 exports.saveMessage = saveMessage;
 var addMessage = function (user1, user2, message) {
@@ -22,5 +23,11 @@ var addMessage = function (user1, user2, message) {
         return;
     }
     messages.set(user1, new Map([[user2, [message]]]));
+};
+var saveFiles = function (files) {
+    //const link = process.env.PUBLIC_URL ? process.env.PUBLIC_URL : 'http://localhost:5000'
+    files.forEach(function (file) {
+        //writeFile(`${link}/files/file.png`, file, (error) => console.error('error: ' + error))
+    });
 };
 //# sourceMappingURL=messages.js.map
