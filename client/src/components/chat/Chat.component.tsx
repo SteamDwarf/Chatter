@@ -84,10 +84,6 @@ const Chat:FC<IChatProps> = () => {
                 </div>
                 <div className='chat__input-block'>
                     <div className="chat__buttons">
-                        <input className="chat__upload-input" type="file" id="upload" multiple={true} onChange={attachFiles}/>
-                        <label htmlFor="upload" className='chat__btn chat__btn_type_upload'>
-                            <AttachFile className="chat__send-btn-svg"/>
-                        </label>
                         <button onClick={sendMessageHandler} className='chat__btn'>
                             <SendIcon className="chat__send-btn-svg"/>
                         </button>
